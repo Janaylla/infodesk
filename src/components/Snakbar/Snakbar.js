@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Slide from "@material-ui/core/Slide";
-import { SnackbarError, SnackbarSucess } from "./Styled";
+import { SnackbarError, SnackbarSucess } from "./styled";
 
 function TransitionUp(props) {
   return <Slide {...props} direction="down" />;
