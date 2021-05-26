@@ -1,5 +1,5 @@
 import React from "react";
-import { Main, Title, ContainerInput, ButtonSubmit } from "./Styled";
+import { Main, Title, ContainerInput, ButtonSubmit } from "./styled";
 
 export default function Form({ children, labelButton, title, onSubmit }) {
   return (
