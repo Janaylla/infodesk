@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import {Nav} from '../../GlobalStyle'
-import {colorBlue2, colorBlue3, marginValue} from '../../GlobalStyle'
+import {colorBlue2, colorBlue3, marginValue, text1} from '../../GlobalStyle'
 export const DivFooter = styled.footer`
     display: flex;
     justify-content: space-between;
@@ -25,6 +25,7 @@ flex-direction: column;
 align-items: flex-start;
 margin: 0px ${marginValue};
 justify-content: flex-start;
+
 img{
     background-color: grey;
     width: 30px;
@@ -38,6 +39,8 @@ justify-content: flex-start;
 }
 h6{
 text-align: start;
+${text1}
+
 }
 `
 export const NavFooter = styled(Nav)`
@@ -61,7 +64,7 @@ export const DivCredits = styled.div`
        display: flex;
    }
     li{
-        font-size: 0.6rem; 
+        ${text1}
         margin: 20px ${marginValue};
         
     }

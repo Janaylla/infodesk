@@ -1,10 +1,10 @@
 import styled from "styled-components";
-import {colorOrange} from '../../GlobalStyle'
+import {colorOrange, colorBlueDark} from '../../GlobalStyle'
 export const Button = styled.button`
   height: 35px;
   width: 150px;
   border:none;
-  background-color: ${colorOrange};
+  background-color: ${(props) => props.color === "blue"? colorBlueDark:colorOrange };
   cursor: pointer;
   color:white;
   border-radius: 3px;

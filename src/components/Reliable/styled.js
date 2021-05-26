@@ -48,9 +48,8 @@ img{
   }
 }
 
-`
-export const Hr = styled.hr`
-    background-color: ${colorOrange};
-    height: 7px;
-    border:none;
+button{
+    bottom:-7px;
+    position: absolute;
+  }
 `

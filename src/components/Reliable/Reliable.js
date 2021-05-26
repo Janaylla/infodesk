@@ -1,6 +1,7 @@
 import React from "react";
 import { Section } from './styled'
 import SectionImg from '../../assets/img/NETHERLANDS_JumbotronNL.png'
+import Button from '../../components/Button/Button'
 const Reliable = () => {
 
     return <Section>
@@ -14,7 +15,9 @@ const Reliable = () => {
                 <h1>Reliable ande relevant information.</h1>
                 <h1>Let us help you start your future</h1>
             </div>
+            
         </div>
+            <Button color="blue">Read about us</Button>
     </Section>
 };
 

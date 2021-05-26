@@ -82,6 +82,6 @@ img{
 `
 export const Hr = styled.hr`
     background-color: ${colorOrange};
-    height: 7px;
+    height: 3px;
     border:none;
 `

@@ -7,9 +7,9 @@ const HomePage = () => {
     return <Section1>
         <img src={Section} />
         <div className="divButtons">
-            <Button className="b1">Check the info</Button>
-            <Button className="b2">Check all stories</Button>
-            <Button className="b3">Check all videos</Button>
+        <Button className="b1">Check the info</Button>
+        <Button className="b2">Check all stories</Button>
+        <Button className="b3">Check all videos</Button>
         </div>
     </Section1>
 };
