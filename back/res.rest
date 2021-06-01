@@ -1,0 +1,16 @@
+###
+POST  http://localhost:3003/login
+Content-Type: application/json
+
+{
+     "email": "jana@gmail.com",
+     "password": "1"
+}
+
+POST  http://localhost:3003/teste
+Content-Type: application/json
+
+{
+     "user": "luiz",
+     "pwd": "123"
+}
