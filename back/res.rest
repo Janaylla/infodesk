@@ -25,11 +25,15 @@ Content-Type: application/json
      "password": "1"
 }
 
+###
+GET  http://localhost:3003/user/test HTTP/1.1
+Content-Type: application/xml
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg3MDYyLCJleHAiOjE3MDkwODcwNjJ9.gvbvh1Z6ya5GSYX_T_APRSOnYcn6cgj6XGKmO5NsOQk
 
 ###
-GET  http://localhost:3003/teste HTTP/1.1
+GET  http://localhost:3003/test HTTP/1.1
 Content-Type: application/xml
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNTk5NjUxLCJleHAiOjE2MjI1OTk5NTF9.6JuFGApc3jZbxsKP4D8EEWQrdfGuXNVZDITjrw1N9cE
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg3Mjk2LCJleHAiOjE3MDkwODcyOTZ9.rb9L-uABtxMGbK_g9SIA758h3y4XTnAcr3mAUd0-md0
 
 ###
 GET  http://localhost:3003/post/all 
