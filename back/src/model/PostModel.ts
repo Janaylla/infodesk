@@ -36,6 +36,24 @@ const postModel = {
         catch(err){
             return (err.message || err.sqlMessage)
         }
+    },
+    like: async (id:string, id_user:string, like:number):Promise<any> => {
+        
+        try{
+            const result1 = await connection.raw(`
+                DELETE FROM likePosts WHERE UserId = ${id_user} and PostsId = ${id}
+            `)
+            if(like === -1 || like === 1){
+            const result =  await connection.raw(`
+                INSERT INTO likePosts  VALUE (${id}, ${id_user}, ${like === 1})
+            `)
+            return result[0].affectedRows;
+            }
+            return result1[0].affectedRows;
+        }
+        catch(err){
+            return (err.message || err.sqlMessage)
+        }
     }
 }
 export default postModel;

@@ -7,14 +7,6 @@ Content-Type: application/json
      "password": "1"
 }
 
-###
-POST http://localhost:3003/teste
-Content-Type: application/json
-
-{
-     "user": "luiz",
-     "pwd": "123"
-}
 
 ###
 POST http://localhost:3003/login
@@ -26,28 +18,71 @@ Content-Type: application/json
 }
 
 ###
-GET  http://localhost:3003/user/test HTTP/1.1
-Content-Type: application/xml
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg3MDYyLCJleHAiOjE3MDkwODcwNjJ9.gvbvh1Z6ya5GSYX_T_APRSOnYcn6cgj6XGKmO5NsOQk
-
-###
 GET  http://localhost:3003/test HTTP/1.1
 Content-Type: application/xml
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg3Mjk2LCJleHAiOjE3MDkwODcyOTZ9.rb9L-uABtxMGbK_g9SIA758h3y4XTnAcr3mAUd0-md0
-
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
 ###
 GET  http://localhost:3003/post/all 
 
 
 ###
-GET  http://localhost:3003/post/2 
+GET  http://localhost:3003/post/2
 
 ###
-PUT  http://localhost:3003/post/create 
+PUT  http://localhost:3003/post/create
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
 
 {
-     "userId": 1, 
      "text": "Teste", 
      "price": 200
 }
+
+###
+PUT  http://localhost:3003/post/1?like=1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
+
+###
+PUT  http://localhost:3003/post/comment1/1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
+
+{
+     "text": "textasdasdsa"
+}
+
+###
+PUT  http://localhost:3003/post/comment2/1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
+
+{
+     "text": "TESTE 22"
+}
+
+###
+PUT  http://localhost:3003/post/comment3/1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
+
+{
+     "text": "TESTE 33"
+}
+
+
+###
+PUT  http://localhost:3003/post/comment1/1/like?like=-1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
+
+
+###
+PUT  http://localhost:3003/post/comment2/1/like?like=-1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
+
+###
+PUT  http://localhost:3003/post/comment3/1/like?like=-1
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc

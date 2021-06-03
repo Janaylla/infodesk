@@ -35,8 +35,11 @@ const userModel = {
             })
             const result = await connection.raw(`
                 SELECT Id from login
-                WHERE id = '${id}'
+                WHERE id = ${id}
             `)
+            if(!result[0].length){
+                throw new Error("Failed to authenticate token")
+            }
             return (id)
         }
         catch (err) {
