@@ -5,6 +5,7 @@ const Router = express.Router();
 Router.post('/login', Controller.user.login)
 Router.get('/post/all', Controller.post.get)
 Router.get('/post/:id', Controller.post.getById)
+ Router.get('/post/comment1/:PostId', Controller.postComment.getLevel)
 Router.put('/post/create', Controller.post.create)
 Router.put('/post/comment1/:PostId', Controller.postComment.createLevel1)
 Router.put('/post/comment2/:Comment1Id', Controller.postComment.createLevel2)

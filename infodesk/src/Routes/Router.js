@@ -4,7 +4,8 @@ import HomePage from "../screens/HomePage/HomePage";
 import AboutPage from "../screens/AboutPage/AboutPage";
 import VideoPage from "../screens/VideoPage/VideoPage";
 import VideosPage from "../screens/VideosPage/VideosPage";
-import Find from "../screens/FindPage/FindPage"
+import FindPage from "../screens/FindPage/FindPage"
+import LoginPage from "../screens/LoginPage/LoginPage"
 
 const Router = () => {
   return (
@@ -13,11 +14,14 @@ const Router = () => {
         <Route exact path="/">
           <HomePage />
         </Route>  
+        <Route exact path="/login">
+          <LoginPage />
+        </Route>
         <Route exact path="/about">
           <AboutPage />
         </Route>
         <Route exact path="/find">
-          <Find />
+          <FindPage />
         </Route>
         <Route exact path="/videos">
           <VideosPage />

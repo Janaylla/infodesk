@@ -3,16 +3,10 @@ import {Nav} from '../../GlobalStyle'
 import {colorBlueDark, marginValue, text2, text3, marginValue2, text1} from '../../GlobalStyle'
 export const DivSection = styled.section`
     background-color: ${colorBlueDark};
-    h6{
-        ${text1}
-        color:white;
-        margin: 0 0 ${marginValue} 10px;
-    }
-    button{
-        
-        margin: 0 0 0 10px;
-    }
+    display: flex;
     padding: ${marginValue2};
+    justify-content: space-between;
+    align-items: flex-start;
 `
 export const Comments = styled.div`
 
@@ -22,7 +16,6 @@ background-color: #ffffff;
 margin: ${marginValue} 0;
 padding: 1vw;
 display: flex;
-width: 100%;
 h3{
     ${text3}
 }
@@ -52,10 +45,10 @@ p{
 }
 `
 
-export const DivHomeComents = styled.div`
+export const DivHomeComments = styled.div`
 
 `
-export const DivInputComents = styled.div`
+export const DivInputComments = styled.div`
 display: flex;
 align-items: center;
 input{
@@ -69,4 +62,17 @@ input{
 svg{
     width: 28px;
 }
+`
+export const DivFind = styled.div`  
+    width: calc(100% - 150px);
+    h2{
+        ${text2}
+        color:white;
+        font-size: 25px;
+        margin: 10px 0 0 0;
+        font-weight: 300;
+    }
+    >button{
+        margin: 10px 0 50px 0 ;
+    }
 `

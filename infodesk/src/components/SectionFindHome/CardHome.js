@@ -1,16 +1,34 @@
-import React from "react";
-import Button from '../Button/Button'
-import { DivCardHome,DivHomeComents,DivInputComents} from './styled'
+import React, { useEffect, useState } from "react";
+import { DivCardHome,DivHomeComments} from './styled'
 import Comment from '../PostComment/PostComment'
-import {ChatBubbleOutline} from '@material-ui/icons';
-import CardComment from '../../components/Comment/CardComment'
-const FindHome = ({text, price, name, contact, coments}) => {
+import CardComment from '../Comment/CardCommentLevel1'
+import {useRequestData} from '../../hooks/useRequestData'
+import {usePostData} from '../../hooks/usePostData'
+
+const FindHome = ({text, price, name, contact, Comments, typeAccommodation, id}) => {
+    const [comments, getComments] = useRequestData(`/post/comment1/${id}`, [], 'comments1')
+    const [postComments, loading, success] = usePostData(`/post/comment1/${id}`)
+    
+   
+    const [textComment, setTextComment] = useState("")
+    
+    const onClickCancel = () =>{
+        setTextComment("")
+    }
+    const onClickComment = () =>{
+        postComments({text: textComment})
+    }
+    useEffect(() => {
+        if(!loading){
+            getComments()
+        }
+    }, [loading])
     return (
         <>
         <DivCardHome>
             <div className="text">
                 <div>
-                    <h3>Room</h3>
+                    <h3>{typeAccommodation}</h3>
                     <h3>{price} €</h3>
                 </div>
                 <div>
@@ -30,11 +48,26 @@ const FindHome = ({text, price, name, contact, coments}) => {
                 </div>
             </div>
         </DivCardHome>
-       <Comment/>
-        <DivHomeComents>
-            <CardComment name="Felipe" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia sem vel lectus dictum, in fermentum orci congue. Integer volutpat venenatis nulla ut convallis;."/>
-            <CardComment name="Felipe" text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia sem vel lectus dictum, in fermentum orci congue. Integer volutpat venenatis nulla ut convallis;."/>
-        </DivHomeComents>
+       <Comment
+       onClickComment={onClickComment}
+       onClickCancel={onClickCancel}
+       onChange={(e) => setTextComment(e.target.value)}
+        value={textComment}
+       />
+       
+        <DivHomeComments>
+            {comments.map((comments)=>{
+                return  <CardComment 
+                name={comments.Name} 
+                text={comments.Text} 
+                likes={comments.Likes}
+                disLikes={comments.DisLikes}
+                 myLike={comments.myLike} 
+                 id={comments.Id}
+                 update={getComments}
+                 />
+            })}
+        </DivHomeComments>
         </>
     )
 };

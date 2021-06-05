@@ -35,7 +35,8 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4
 
 {
      "text": "Teste", 
-     "price": 200
+     "price": 200, 
+     "accommodation": ""
 }
 
 ###
@@ -86,3 +87,6 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4
 PUT  http://localhost:3003/post/comment3/1/like?like=-1
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
+
+###
+GET  http://localhost:3003/post/comment1/1

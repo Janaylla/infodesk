@@ -181,6 +181,24 @@ const classController = {
         catch(err){
             res.send({message: err.message})
         }
+    },
+    getLevel: async (req: Request, res: Response):Promise<any> => {
+        try{
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const PostId = req.params.PostId as string;
+            const dbResult = userId?
+             await postCommentModel.getLevel1(PostId, userId):
+             await postCommentModel.getLevel1(PostId)
+            
+            res.send({
+                comments1: dbResult
+            })
+        }
+        catch(err){
+            res.send({message: err.message})
+        }
     }
 } 
 export default classController 

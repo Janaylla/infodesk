@@ -1,9 +1,10 @@
 type post = {
     id?: number,
     userId: string,
-    text: string,
+    description: string,
     date: Date|undefined|string,
-    price: number
+    price: string,
+    accommodation: string
 }
 
 export type posts = Array<post>;

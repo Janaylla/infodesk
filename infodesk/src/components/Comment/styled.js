@@ -31,6 +31,16 @@ export const DivLike = styled.div`
     align-items: center;
     svg{
         width: 20px;
-        margin: 10px 10px 10px 0px;
+        margin: 5px 5px 5px 0px;
+        cursor: pointer;
+        
+        :hover *{
+            color: #ffffffaa;
+        }
+    }
+    h6{
+        margin: 0 5px;
+        font-size: 20px;
+        color: #ffffff;
     }
 `

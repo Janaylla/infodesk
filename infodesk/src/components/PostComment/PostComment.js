@@ -1,16 +1,17 @@
 import React from "react";
 import Button from '../Button/Button'
-import { DivInputComents} from './styled'
+import { DivInputComments} from './styled'
 import {ChatBubbleOutline} from '@material-ui/icons';
 
-const Comment = () => {
+const Comment = ({onClickComment, onChange, value, onClickCancel}) => {
+   
     return (
-        <DivInputComents>
+        <DivInputComments>
              <ChatBubbleOutline style={{ color: "white" }}/>
-            <input placeholder="White a comment"/>
-            <Button color="white">Cancel</Button>
-            <Button color="white">Coment</Button> 
-        </DivInputComents>
+            <input placeholder="White a comment" onChange={onChange} value={value}/>
+            <Button color="white" onClick={onClickCancel}>Cancel</Button>
+            <Button color="orange" onClick={onClickComment}>Comment</Button> 
+        </DivInputComments>
     )
 };
 

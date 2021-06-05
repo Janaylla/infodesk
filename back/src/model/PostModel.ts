@@ -4,7 +4,14 @@ const postModel = {
     get: async ():Promise<any> => {
         try{
             const result =  await connection.raw(`
-                SELECT * FROM posts
+            SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, r.Name, lg.Email,
+            count(liked) as 'like', count(c.Id) as 'comments', p.typeOfAccommodation 
+            FROM posts AS p
+            LEFT JOIN likeposts as l ON l.PostsId = p.Id
+            LEFT JOIN registrationdata as r ON r.Id = p.UserId
+            LEFT JOIN login as lg ON lg.Id = p.UserId
+            LEFT JOIN postslevelcomments1 as c on c.PostId = p.Id  
+            group by p.Id;
             `)
             return result[0];
         }
@@ -24,12 +31,12 @@ const postModel = {
             return (err.message || err.sqlMessage)
         }
     },
-    create: async ({userId, text, date, price}:post):Promise<any> => {
+    create: async ({userId, description, date, price, accommodation}:post):Promise<any> => {
         
         try{
             const result =  await connection.raw(`
-                INSERT INTO posts (UserId, Text, Date, Price)
-                VALUES ('${userId}', '${text}', '${date}', '${price}');
+                INSERT INTO posts (UserId, Text, Date, Price, typeOfAccommodation)
+                VALUES ('${userId}', '${description}', '${date}', ${price}, '${accommodation}');
             `)
             return result[0].affectedRows;
         }

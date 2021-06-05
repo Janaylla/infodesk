@@ -33,12 +33,12 @@ const classController = {
         try{
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
-            let {text, date, price}:post = req.body;
+            let {description, date, price, accommodation}:post = req.body;
             const currentDate = new Date();
             
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
             console.log(date)
-            const dbResult = await postModel.create({userId, text, date, price});
+            const dbResult = await postModel.create({userId, description, date, price, accommodation});
             console.log(dbResult)
             if(dbResult != 1){
                 res.statusCode = 400;
