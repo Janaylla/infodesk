@@ -1,29 +1,28 @@
 import React from "react";
-import {DivSection, DivVideos, ButtonIcon} from './style'
+import { DivSection, DivVideos, ButtonIcon } from './style'
 import Card from './CardVideo'
-import {ArrowForwardIos} from '@material-ui/icons'
-import {colorGrey} from '../../GlobalStyle'
+import { ArrowForwardIos } from '@material-ui/icons'
+import { colorGrey } from '../../GlobalStyle'
 
-const CardsVideos = () =>{
-    let cards = [];
-    for(let i =0; i<6; i++){
-        cards.push(<Card/>)
+const Section = ({ colorSection, titleSection, videos }) => {
+
+  return <DivSection color={colorSection}>
+
+    <h2> {titleSection}</h2>
+
+    <DivVideos>{
+      videos.map((video) => {
+        return <Card
+          id={video.Id}
+          title={video.Title}
+          date={video.Date}
+          url={video.Url} />
+      })
     }
-    return cards
-}
-const Section = ({videos}) => {
-
-  return <DivSection color={videos === "more"? "orange":"blue"}>
-      
-      <h2> {videos === "more"? "Most Viewed":"Latest Videos"}</h2>
-      <DivVideos>
-      {
-         CardsVideos()
-      }
-      </DivVideos>
-      <ButtonIcon>
-    <ArrowForwardIos style={{ color: colorGrey }}/>
-      </ButtonIcon>
+    </DivVideos>
+    <ButtonIcon>
+      <ArrowForwardIos style={{ color: colorGrey }} />
+    </ButtonIcon>
   </DivSection>
 };
 

@@ -29,7 +29,7 @@ const Router = () => {
         <Route exact path="/videos">
           <VideosPage />
         </Route>  
-        <Route path="/videos/:video">
+        <Route path="/videos/:id">
           <VideoPage />
         </Route> 
          

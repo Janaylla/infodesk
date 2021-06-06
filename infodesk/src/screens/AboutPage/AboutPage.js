@@ -1,6 +1,6 @@
 import React from "react";
 import Header from '../../components/Header/Header'
-import Baner from '../../components/Baner/Baner'
+import Banner from '../../components/Banner/Banner'
 import {Main} from './styled'
 import Footer from '../../components/Footer/Footer'
 import Realible from '../../components/Reliable/Reliable'
@@ -10,7 +10,7 @@ const VideoPage = () => {
 
   return <Main>
   <Header/>
-  <Baner/>
+  <Banner/>
   <Section s1/>
   <Realible/>
   <Section/>

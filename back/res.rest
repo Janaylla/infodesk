@@ -90,3 +90,15 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4
 
 ###
 GET  http://localhost:3003/post/comment1/1
+
+###
+GET http://localhost:3003/video/all
+
+###
+PUT http://localhost:3003/video/comment1/6
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NTgsImlhdCI6MTYyMjk0MDMxNCwiZXhwIjoxNzA5MzQwMzE0fQ.naLPOf8WWoY2CXv3SvaIh9q3284y95y8qHI6Bcf3AJU
+
+{
+     "text": "TESTE 33"
+}

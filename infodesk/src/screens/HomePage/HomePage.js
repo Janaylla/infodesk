@@ -1,6 +1,6 @@
 import React from "react";
 import Header from '../../components/Header/Header'
-import Baner from '../../components/Baner/Baner'
+import Banner from '../../components/Banner/Banner'
 import {Main} from './styled'
 import Section from './Section1'
 import {Hr} from '../../GlobalStyle'
@@ -10,7 +10,7 @@ const HomePage = () => {
 
   return <Main>
   <Header/>
-  <Baner/>
+  <Banner/>
   <Section/>
   <Realible/>
   <Hr/>

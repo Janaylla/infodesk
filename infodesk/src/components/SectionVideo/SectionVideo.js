@@ -1,17 +1,66 @@
-import React from "react";
-import { DivSection, Title} from './styled'
+import React,{useState, useEffect} from "react";
+import { DivSection, Title, DivHomeComments} from './styled'
 import {AccessTime} from '@material-ui/icons'
-import PostComment from '../../components/PostComment/PostComment'
+import Comment from '../PostComment/PostComment'
+import {useParams} from 'react-router-dom'
+import {useRequestData} from '../../hooks/useRequestData'
+import {usePostData} from '../../hooks/usePostData'
+import CardComment from '../Comment/CardCommentLevel1'
 const SectionVideo = () => {
+    const { id } = useParams();
+    const [comments, getComments] = useRequestData(`/video/comment1/${id}`, [], 'comments1')
+    const [videoComments, loading, success] = usePostData(`/video/comment1/${id}`)
     
+   
+    const [textComment, setTextComment] = useState("")
+    
+    const onClickCancel = () =>{
+        setTextComment("")
+    }
+    const onClickComment = () =>{
+        videoComments({text: textComment})
+    }
+    useEffect(() => {
+        if(!loading && success){
+            getComments()
+            setTextComment("")
+        }
+    }, [loading])
+      const [video, getVideo] = useRequestData(`/video/${id}`, {}, 'video')
+
     return (
         <DivSection>
-            <video src="https://storage.googleapis.com/future-apis.appspot.com/1.mp4" controls autoplay></video>
+            {video && video.Url && <>
+                <video src={`/videos/${video.Url}`} controls autoplay></video>
             <Title>
-                <h2>Title </h2>
-                <h3><AccessTime/>May, 2021</h3>
+                <h2>{video.Title}</h2>
+                <h3><AccessTime/>{video.Date}</h3>
             </Title>
-            <PostComment/>
+            </>}
+            
+       <Comment
+       onClickComment={onClickComment}
+       onClickCancel={onClickCancel}
+       onChange={(e) => setTextComment(e.target.value)}
+        value={textComment}
+       />
+       
+        <DivHomeComments>
+             {comments.map((comments)=>{
+                return  <CardComment 
+                name={comments.UserName} 
+                text={comments.Text} 
+                likes={comments.Likes}
+                disLikes={comments.DisLikes}
+                 myLike={comments.myLike} 
+                 id={comments.Id}
+                 update={getComments}
+                 type={"video"}
+                 />
+             })
+            }
+            
+        </DivHomeComments>
         </DivSection>
     )
 };
