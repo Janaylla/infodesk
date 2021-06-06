@@ -2,6 +2,10 @@ import {Request, Response} from 'express'
 import userModel from '../model/userModel'
 import login from '../types/login'
 import jwt from 'jsonwebtoken'
+import {config} from "dotenv";
+import singUp from '../types/singUp';
+
+config();
 
 const classController = {
     login: async (req: Request, res: Response):Promise<any> => {
@@ -11,13 +15,12 @@ const classController = {
             const dbResult = await userModel.login({email, password})
 
             if(dbResult.length !== 1){
-                 console.log(dbResult)
                 res.statusCode = 400;
                 throw new Error("User not found")
             }
 
-            const id = dbResult[0].id; 
-            const token = jwt.sign({ id }, process.env.SECRET|| "", {
+            const id = dbResult[0].Id; 
+            const token = jwt.sign({ id }, process.env.SECRET || "", {
                 expiresIn: 86400000
             });
 
@@ -29,6 +32,31 @@ const classController = {
         catch(err){
             res.send({message: err.message})
         }
-    }
+    },
+    create:async (req: Request, res: Response):Promise<any> => {
+        try{                
+            const {email, password, userName, lastName, firstName}:singUp = req.body;
+         
+            const dbResult = await userModel.create({email, password, userName, lastName, firstName})
+
+            console.log(dbResult)
+            if(dbResult.length !== 1){
+                res.statusCode = 400;
+                throw new Error("User not create")
+            }
+            const id = dbResult[0].Id; 
+            const token = jwt.sign({ id }, process.env.SECRET || "", {
+                expiresIn: 86400000
+            });
+
+            res.send({
+                user: dbResult[0],
+                token: token
+            })
+        }
+        catch(err){
+            res.send({message: err.message})
+        }
+    },
 } 
 export default classController 

@@ -2,23 +2,23 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL } from "../constants/urls";
 
-export const useRequestData = (path, initialState) => {
+export const useRequestData = (path, initialState, keyObject) => {
   const [data, setData] = useState(initialState);
-  const user = JSON.parse(localStorage.getItem("user"));
-
+  const token = localStorage.getItem("token");
   const getData = () => {
-    if (user) {
+    console.log("poo")
       axios
         .get(`${BASE_URL}${path}`, {
           headers: {
-            auth: user.token,
+            authorization: token,
           },
         })
         .then((response) => {
-          setData(response.data);
+          setData(response.data[keyObject]);
         })
-        .catch((err) => console.log(err.message));
-    }
+        .catch((err) => {
+          console.log(err.message)
+        });
   };
 
   useEffect(() => {

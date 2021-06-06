@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import Slide from "@material-ui/core/Slide";
-import { SnackbarError, SnackbarSucess } from "./styled";
+import { SnackbarError, SnackbarSuccess } from "./styled";
 
 function TransitionUp(props) {
   return <Slide {...props} direction="down" />;
 }
-export default function DirectionSnackbar({ text, sucess }) {
+export default function DirectionSnackbar({ text, success }) {
   const [open, setOpen] = useState(true);
 
   return (
     <div>
-      {sucess ? (
-        <SnackbarSucess
+      {success ? (
+        <SnackbarSuccess
           open={open}
           onClose={() => setOpen(false)}
           TransitionComponent={TransitionUp}

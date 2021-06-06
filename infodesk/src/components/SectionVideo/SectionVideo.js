@@ -2,7 +2,7 @@ import React from "react";
 import { DivSection, Title} from './styled'
 import {AccessTime} from '@material-ui/icons'
 import PostComment from '../../components/PostComment/PostComment'
-import Coment from '../../components/Comment/CardComment'
+import Comment from '../../components/Comment/CardCommentLevel1'
 const SectionVideo = () => {
     
     return (
@@ -13,7 +13,7 @@ const SectionVideo = () => {
                 <h3><AccessTime/>May, 2021</h3>
             </Title>
             <PostComment/>
-           <Coment name="Felipe" text="Reliable and relevant information.
+           <Comment name="Felipe" text="Reliable and relevant information.
 Let us help you start your future" like/>
         </DivSection>
     )

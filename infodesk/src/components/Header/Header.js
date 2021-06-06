@@ -4,8 +4,9 @@ import {Nav} from '../../GlobalStyle'
 import { ReactComponent as Logo } from '../../assets/logo/Image1.svg'
 import { ArrowDropDown, Search } from '@material-ui/icons'
 import Button from '../../components/Button/Button'
-import {goToAbout, goToHome, goToVideos, goToFind} from '../../Routes/Coordinators'
+import {goToAbout, goToHome, goToVideos, goToFind, goToLogin} from '../../Routes/Coordinators'
 import {useHistory} from 'react-router-dom'
+
 export default function Header() {
   const history = useHistory()
   return (
@@ -37,7 +38,7 @@ export default function Header() {
           <input />
           <Search />
         </div>
-        <Button>
+        <Button onClick={() => goToLogin(history)}>
           Login
         </Button>
       </Right>

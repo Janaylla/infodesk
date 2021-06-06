@@ -1,26 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from '../Button/Button'
-import { DivSection, Comments} from './styled'
+import { DivSection, Comments, DivFind} from './styled'
+import Search from './FormSearch'
 import CardHome from './CardHome'
+import {useRequestData} from '../../hooks/useRequestData'
+import NewPost from '../../components/NewPost/NewPost'
 const FindHome = () => {
+    const [posts, getPosts] = useRequestData('/post/all', [], 'posts')
+    const [openNewPost, setOpenNewPost] = useState(false);
+    console.log(posts)
     return (
         <DivSection>
-           <h6>Do you have place to anouce</h6>
-           <Button color="orange">Post It</Button>
+            <Search/>
+            <DivFind>
+           <h2>Do you have place to announce?</h2>
+           <Button color="orange" onClick={() => setOpenNewPost(true)}>Post It</Button>
+
+             <NewPost open={openNewPost} update={getPosts} setOpen={setOpenNewPost}/> 
+
             <Comments>
-                <CardHome
-                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia sem vel lectus dictum, in fermentum orci congue. Integer volutpat venenatis nulla ut convallis. Sed ut massa eget nibh mattis lacinia eget vitae eros. Morbi sollicitudin turpis nec sapien placerat vehicula. Praesent tincidunt et tellus quis rhoncus" 
-                price="500" 
-                name="Felipq" 
-                contact="felipe@student.ni"
-                />
-                <CardHome
-                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia sem vel lectus dictum, in fermentum orci congue. Integer volutpat venenatis nulla ut convallis. Sed ut massa eget nibh mattis lacinia eget vitae eros. Morbi sollicitudin turpis nec sapien placerat vehicula. Praesent tincidunt et tellus quis rhoncus" 
-                price="500" 
-                name="Felipq" 
-                contact="felipe@student.ni"
-                />
+                {
+                    posts && posts.map((post) =>{
+                        return <CardHome
+                        text={post.Text}
+                        price={post.Price}
+                        name={post.FirstName +" "+ post.LastName} 
+                        contact={post.Email}
+                        typeAccommodation={post.typeOfAccommodation}
+                        id={post.Id}
+                        />
+                    })
+                }
+               
             </Comments>
+            </DivFind>
         </DivSection>
     )
 };

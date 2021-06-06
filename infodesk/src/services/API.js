@@ -2,8 +2,7 @@ import { BASE_URL } from "../constants/urls";
 import axios from "axios";
 import {
   goToSignUpAddress,
-  goToHome,
-  goToProfile,
+  goToHome
 } from "../Routes/Coordinators";
 
 export const signup = (body, history, setSnack, setLoading) => {
@@ -47,103 +46,5 @@ export const login = (body, history, setSnack, setLoading) => {
       console.log(err);
       setLoading(false);
       setSnack({ text: "E-mail e/ou senha incorreta", sucess: false });
-    });
-};
-
-export const putAddress = (body, history, goTo, setSnack, setLoading) => {
-  setLoading(true);
-  const token = localStorage.getItem("token");
-  setSnack({ text: "" });
-  axios
-    .put(`${BASE_URL}address`, body, {
-      headers: {
-        auth: token,
-      },
-    })
-    .then((res) => {
-      console.log(res);
-      localStorage.setItem("user", res.data.token);
-      goTo(history);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-      setLoading(false);
-      setSnack({
-        text: "Não foi possível adicionar endereço, tente novamente!",
-        sucess: false,
-      });
-    });
-};
-
-export const updateProfile = (body, history, setSnack, setLoading) => {
-  setLoading(true);
-  setSnack({ text: "" });
-  const token = localStorage.getItem("token");
-  axios
-    .put(`${BASE_URL}profile`, body, {
-      headers: {
-        auth: token,
-      },
-    })
-    .then((res) => {
-      console.log(res);
-      goToProfile(history);
-      setLoading(false);
-    })
-    .catch((err) => {
-      console.log(err);
-      setLoading(false);
-      setSnack({
-        text: "Não foi possível atualizar seus dados. Tente novamente!",
-        sucess: false,
-      });
-    });
-};
-
-export const updateAddress = (body, history, setSnack, setLoading) => {
-  putAddress(body, history, goToProfile, setSnack, setLoading);
-};
-
-export const addAddress = (body, history, setSnack, setLoading) => {
-  putAddress(body, history, goToHome, setSnack, setLoading);
-};
-
-export const placeOrder = (
-  products,
-  paymentMethod,
-  restaurantId,
-  setCart,
-  setRestaurant,
-  setSnack,
-  setLoading
-) => {
-  const token = localStorage.getItem("token");
-  setLoading(true);
-  setSnack({ text: "" });
-  const body = {
-    products,
-    paymentMethod,
-  };
-  axios
-    .post(`${BASE_URL}restaurants/${restaurantId}/order`, body, {
-      headers: {
-        auth: token,
-      },
-    })
-    .then((res) => {
-      console.log(res);
-      setCart([]);
-      setLoading(false);
-      setRestaurant({});
-      setSnack({ text: "Pedido enviado com sucesso!", sucess: true });
-    })
-    .catch((err) => {
-      console.log(err);
-      setLoading(false);
-      setSnack({
-        text: "Não foi possível fazer seu pedido. Tente novamente!",
-        sucess: false,
-      });
     });
 };
