@@ -32,4 +32,9 @@ Router.put('/video/comment1/:id/like', Controller.videoComment.likeLevel1)
 Router.put('/video/comment2/:id/like', Controller.videoComment.likeLevel2)
 Router.put('/video/comment3/:id/like', Controller.videoComment.likeLevel3)
 
+
+
+Router.get('/story/all', Controller.story.get)
+
+
 export default Router

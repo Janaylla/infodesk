@@ -1,19 +1,19 @@
 import {connection} from '../connection'
-import post from '../types/post'
-const postModel = {
+import story from '../types/story'
+const storyModel = {
     get: async ():Promise<any> => {
         try{
             const result =  await connection.raw(`
-            SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, 
+            SELECT s.Id, s.Date, s.Title, s.Text, s.UserId, 
             r.FirstName, r.LastName, lg.Email, r.UserName,
-            count(liked) as 'like', count(c.Id) as 'comments', p.typeOfAccommodation 
-            FROM posts AS p
-            LEFT JOIN likeposts as l ON l.PostsId = p.Id
-            LEFT JOIN registrationdata as r ON r.Id = p.UserId
-            LEFT JOIN login as lg ON lg.Id = p.UserId
-            LEFT JOIN postslevelcomments1 as c on c.PostId = p.Id  
-            group by p.Id
-            order by p.Date DESC
+            count(liked) as 'like', count(c.Id) as 'comments'
+            FROM stories AS s
+            LEFT JOIN likestory as l ON l.StoryId = s.Id
+            LEFT JOIN registrationdata as r ON r.Id = s.UserId
+            LEFT JOIN login as lg ON lg.Id = s.UserId
+            LEFT JOIN storieslevelcomments1 as c on c.StoryId = s.Id  
+            group by s.Id
+            order by s.Date DESC
             `)
             return result[0];
         }
@@ -24,7 +24,7 @@ const postModel = {
     getById: async (id:string):Promise<any> => {
         try{
             const result =  await connection.raw(`
-                SELECT * FROM posts WHERE id = ${id}
+                SELECT * FROM stories WHERE id = ${id}
             `)
             
             return result[0][0];
@@ -33,12 +33,12 @@ const postModel = {
             return (err.message || err.sqlMessage)
         }
     },
-    create: async ({userId, description, date, price, accommodation}:post):Promise<any> => {
+    create: async ({userId, text, title, date}:story):Promise<any> => {
         
         try{
             const result =  await connection.raw(`
-                INSERT INTO posts (UserId, Text, Date, Price, typeOfAccommodation)
-                VALUES ('${userId}', '${description}', '${date}', ${price}, '${accommodation}');
+                INSERT INTO stories (UserId, Title, Text, Data)
+                VALUES ('${userId}', '${title}', '${text}', '${date}');
             `)
             return result[0].affectedRows;
         }
@@ -50,11 +50,11 @@ const postModel = {
         
         try{
             const result1 = await connection.raw(`
-                DELETE FROM likePosts WHERE UserId = ${id_user} and PostsId = ${id}
+                DELETE FROM likestory WHERE UserId = ${id_user} and storiesId = ${id}
             `)
             if(like === -1 || like === 1){
             const result =  await connection.raw(`
-                INSERT INTO likePosts  VALUE (${id}, ${id_user}, ${like === 1})
+                INSERT INTO likestory  VALUE (${id}, ${id_user}, ${like === 1})
             `)
             return result[0].affectedRows;
             }
@@ -65,4 +65,4 @@ const postModel = {
         }
     }
 }
-export default postModel;
+export default storyModel;

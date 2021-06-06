@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import {Nav} from '../../GlobalStyle'
-import {colorBlueDark, marginValue, text2, text3, marginValue2, text1} from '../../GlobalStyle'
+import { Nav } from '../../GlobalStyle'
+import { colorBlueDark, marginValue, text2, text3, marginValue2, text1 } from '../../GlobalStyle'
 export const DivSection = styled.section`
     background-color: ${colorBlueDark};
     display: flex;
@@ -12,9 +12,7 @@ export const Comments = styled.div`
 
 `
 export const DivCardHome = styled.div`
-background-color: #ffffff;
-margin: ${marginValue} 0;
-padding: 1vw;
+
 display: flex;
 h3{
     ${text3}
@@ -22,26 +20,61 @@ h3{
 p{  
     ${text2}
 }
-.text{
-    flex-grow: 1;
-    >div{
-        display: flex;
-        h3:last-of-type{
-            margin-left: 20px;
-        }
-        margin-bottom: ${marginValue};
+.mainAvatar{
+    .avatar{
+        background-color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
     }
-    margin-bottom: ${marginValue};
+    margin-right: 10px;
 }
-.contact{
-    width: 400px;
-    >div:first-of-type{
-        margin-bottom: ${marginValue};
+.contentPost{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: ${marginValue};
+    width: 100%;
+    .userName{
+        p{
+            ${text3}
+        color:white;
+        font-size: 15px;
+        }
+        margin: 3px 0 0px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 1vw 0;
     }
-    >div{
-        margin: 0 ${marginValue};
-        
-    }
+    .contentText{
+    background-color: #ffffff;
+    padding: 1vw;
+    margin: 5px 0;
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+        .text{
+            flex-grow: 1;
+            >div{
+                display: flex;
+                h3:last-of-type{
+                    margin-left: 20px;
+                }
+                margin-bottom: ${marginValue};
+            }
+            margin-bottom: ${marginValue};
+        }
+        .contact{
+            width: 200px;
+            >div:first-of-type{
+                margin-bottom: ${marginValue};
+            }
+            >div{
+                margin: 0 ${marginValue};
+                
+            }
+            }
+        }
 }
 `
 

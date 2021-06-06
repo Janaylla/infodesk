@@ -92,7 +92,7 @@ Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4
 GET  http://localhost:3003/post/comment1/1
 
 ###
-GET http://localhost:3003/video/all
+GET http://localhost:3003/post/all
 
 ###
 PUT http://localhost:3003/video/comment1/6

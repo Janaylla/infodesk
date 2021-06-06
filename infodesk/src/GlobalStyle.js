@@ -82,7 +82,7 @@ export const Form = styled.form`
       ${text1}
       font-size: 15px;
     }
-    input{
+    input, select{
       width: 350px;
       height: 35px;
       margin: 10px 0;
@@ -92,6 +92,10 @@ export const Form = styled.form`
     box-shadow: 0px 7px 14px -7px rgba(0,0,0,0.48);
     padding: 0 40px 0 10px;
     font-size: 16px;
+    }
+    select{
+      padding: 0 0px 0 10px;
+      width: 400px;
     }
     textarea{
         width: 350px;

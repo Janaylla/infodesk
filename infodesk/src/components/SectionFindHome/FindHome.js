@@ -28,6 +28,8 @@ const FindHome = () => {
                         contact={post.Email}
                         typeAccommodation={post.typeOfAccommodation}
                         id={post.Id}
+                        userName={post.UserName}
+                        date={post.Date}
                         />
                     })
                 }
