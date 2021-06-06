@@ -5,11 +5,11 @@ import {usePostData} from '../../hooks/usePostData'
 import {useRequestData} from '../../hooks/useRequestData'
 import Comment from '../PostComment/PostComment'
 import CardComment2 from './CardCommentLevel2'
-const CardComment = ({ text, name, likes, myLike, id, update, disLikes }) => {
+const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type }) => {
     const [like, setLike] = useState(myLike)
-    const [postLike, loadingLike, successLike] = usePostData(`/post/comment1/${id}/like?like=${like}`)
-    const [postComments, loadingComment, successComment] = usePostData(`/post/comment2/${id}`)
-    const [comments, getComments2] = useRequestData(`/post/comment2/${id}`, [], 'comments2')
+    const [postLike, loadingLike, successLike] = usePostData(`/${type}/comment1/${id}/like?like=${like}`)
+    const [postComments, loadingComment, successComment] = usePostData(`/${type}/comment2/${id}`)
+    const [comments, getComments2] = useRequestData(`/${type}/comment2/${id}`, [], 'comments2')
    
     const [commenting, setCommenting] = useState(false)
     const [textComment, setTextComment] = useState("")
@@ -82,6 +82,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes }) => {
                          myLike={comments2.myLike} 
                          id={comments2.Id}
                          update={getComments2}
+                         type={type}
                          />
                     })
                     }

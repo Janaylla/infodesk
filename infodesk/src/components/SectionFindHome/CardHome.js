@@ -66,6 +66,7 @@ const FindHome = ({text, price, name, contact, Comments, typeAccommodation, id})
                  myLike={comments.myLike} 
                  id={comments.Id}
                  update={getComments}
+                 type={"post"}
                  />
             })}
         </DivHomeComments>
