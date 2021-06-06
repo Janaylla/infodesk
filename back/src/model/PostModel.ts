@@ -4,14 +4,16 @@ const postModel = {
     get: async ():Promise<any> => {
         try{
             const result =  await connection.raw(`
-            SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, r.Name, lg.Email,
+            SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, 
+            r.FirstName, r.LastName, lg.Email,
             count(liked) as 'like', count(c.Id) as 'comments', p.typeOfAccommodation 
             FROM posts AS p
             LEFT JOIN likeposts as l ON l.PostsId = p.Id
             LEFT JOIN registrationdata as r ON r.Id = p.UserId
             LEFT JOIN login as lg ON lg.Id = p.UserId
             LEFT JOIN postslevelcomments1 as c on c.PostId = p.Id  
-            group by p.Id;
+            group by p.Id
+            order by p.Date DESC
             `)
             return result[0];
         }

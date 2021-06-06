@@ -16,15 +16,15 @@ const FindHome = () => {
            <h2>Do you have place to announce?</h2>
            <Button color="orange" onClick={() => setOpenNewPost(true)}>Post It</Button>
 
-             <NewPost open={openNewPost} setOpen={setOpenNewPost}/> 
+             <NewPost open={openNewPost} update={getPosts} setOpen={setOpenNewPost}/> 
 
             <Comments>
                 {
-                    posts.map((post) =>{
+                    posts && posts.map((post) =>{
                         return <CardHome
                         text={post.Text}
                         price={post.Price}
-                        name={post.Name} 
+                        name={post.FirstName +" "+ post.LastName} 
                         contact={post.Email}
                         typeAccommodation={post.typeOfAccommodation}
                         id={post.Id}

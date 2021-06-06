@@ -19,8 +19,9 @@ const FindHome = ({text, price, name, contact, Comments, typeAccommodation, id})
         postComments({text: textComment})
     }
     useEffect(() => {
-        if(!loading){
+        if(!loading && success){
             getComments()
+            setTextComment("")
         }
     }, [loading])
     return (
@@ -58,7 +59,7 @@ const FindHome = ({text, price, name, contact, Comments, typeAccommodation, id})
         <DivHomeComments>
             {comments.map((comments)=>{
                 return  <CardComment 
-                name={comments.Name} 
+                name={comments.UserName} 
                 text={comments.Text} 
                 likes={comments.Likes}
                 disLikes={comments.DisLikes}

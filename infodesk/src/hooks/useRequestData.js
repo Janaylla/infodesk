@@ -14,11 +14,9 @@ export const useRequestData = (path, initialState, keyObject) => {
           },
         })
         .then((response) => {
-          console.log("poo")
           setData(response.data[keyObject]);
         })
         .catch((err) => {
-          console.log("poo2")
           console.log(err.message)
         });
   };

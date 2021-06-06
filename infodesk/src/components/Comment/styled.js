@@ -1,10 +1,11 @@
 import styled from 'styled-components'
-import {Nav} from '../../GlobalStyle'
-import {colorBlueDark, marginValue, text2, text3, marginValue2, text1} from '../../GlobalStyle'
+import { Nav } from '../../GlobalStyle'
+import { colorBlueDark, marginValue, text2, text3, marginValue2, text1 } from '../../GlobalStyle'
 
 export const DivCardComment = styled.div`
     display: flex;
     padding: 5px;
+    width: 100%;
     .avatar{
         width: 50px;
         height: 50px;
@@ -12,8 +13,9 @@ export const DivCardComment = styled.div`
         border-radius: 50%;
     }
     .text{
-        max-width: 500px;
+        max-width: 800px;
         padding: 10px;
+        flex-grow: 1;
         h3{
             ${text3}
             color:white;
@@ -23,12 +25,14 @@ export const DivCardComment = styled.div`
         p{
             ${text1}
             color:white;
+           
         }
     }
 `
 export const DivLike = styled.div`
     display: flex;
     align-items: center;
+    width:100%;
     svg{
         width: 20px;
         margin: 5px 5px 5px 0px;
@@ -43,4 +47,11 @@ export const DivLike = styled.div`
         font-size: 20px;
         color: #ffffff;
     }
+`
+export const Reply = styled.p`
+ cursor: pointer;
+                opacity: 0.6;
+            :hover{
+                opacity: 1;
+            }
 `

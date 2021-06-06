@@ -10,6 +10,9 @@ export const goToFind = (history) => {
 export const goToLogin = (history) => {
   history.push("/login");
 };
+export const goToSingUp = (history) => {
+  history.push("/singUp");
+};
 export const goToVideos = (history) => {
   history.push("/videos");
 };

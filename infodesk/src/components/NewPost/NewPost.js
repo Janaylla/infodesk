@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Form} from '../../GlobalStyle'
 import {DialogForm, DivAbsolute} from './styled'
 import {useForm} from '../../hooks/useForm'
@@ -7,25 +7,32 @@ import { IconButton } from '@material-ui/core'
 import { CloseOutlined } from '@material-ui/icons'
 import { usePostData } from '../../hooks/usePostData'
 
-function SimpleDialog({onClose, selectedValue, open }) {
+function SimpleDialog({onClose, open, update}) {
   const [postData, loading, success]= usePostData('/post/create')
-const formInitial = {
-  text: "",
-  accommodation: "",
-  price: ""
-}
+
+  const formInitial = {
+    text: "",
+    accommodation: "",
+    price: ""
+  }
+useEffect(() => {
+  if(!loading && success){
+      update();
+      resetForm(formInitial);
+      onClose();
+  }
+}, [loading])
+
 const [form, onChange, resetForm] = useForm(formInitial)
-  const handleClose = () => {
-    onClose(selectedValue);
-  };
+  
   const newPost = (e) =>{
     e.preventDefault();
     postData(form)
   }
   return (
-    <DialogForm onSubmit={newPost} onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
+    <DialogForm onClose={onClose} aria-labelledby="simple-dialog-title" open={open}>
         <DivAbsolute>
-      <IconButton onClick={handleClose}>
+      <IconButton onClick={onClose}>
         <CloseOutlined />
       </IconButton>
     </DivAbsolute>
@@ -57,14 +64,14 @@ const [form, onChange, resetForm] = useForm(formInitial)
   );
 }
 
-export default function SimpleDialogDemo({open, setOpen}) {
+export default function SimpleDialogDemo({open, setOpen, update}) {
   const handleClose = () => {
     setOpen(false);
   };
 
   return (
     <div>
-      <SimpleDialog open={open} onClose={handleClose} />
+      <SimpleDialog open={open} onClose={handleClose} update={update} />
     </div>
   );
 }

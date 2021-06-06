@@ -6,7 +6,7 @@ import VideoPage from "../screens/VideoPage/VideoPage";
 import VideosPage from "../screens/VideosPage/VideosPage";
 import FindPage from "../screens/FindPage/FindPage"
 import LoginPage from "../screens/LoginPage/LoginPage"
-
+import SingUpPage from '../screens/SingUpPage/SingUpPage'
 const Router = () => {
   return (
     <BrowserRouter>
@@ -16,6 +16,9 @@ const Router = () => {
         </Route>  
         <Route exact path="/login">
           <LoginPage />
+        </Route> 
+        <Route exact path="/singUp">
+          <SingUpPage />
         </Route>
         <Route exact path="/about">
           <AboutPage />

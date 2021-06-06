@@ -182,7 +182,7 @@ const classController = {
             res.send({message: err.message})
         }
     },
-    getLevel: async (req: Request, res: Response):Promise<any> => {
+    getLevel1: async (req: Request, res: Response):Promise<any> => {
         try{
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
@@ -194,6 +194,42 @@ const classController = {
             
             res.send({
                 comments1: dbResult
+            })
+        }
+        catch(err){
+            res.send({message: err.message})
+        }
+    },
+    getLevel2: async (req: Request, res: Response):Promise<any> => {
+        try{
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const Comment1Id = req.params.Comment1Id as string;
+            const dbResult = userId?
+             await postCommentModel.getLevel2(Comment1Id, userId):
+             await postCommentModel.getLevel2(Comment1Id)
+            
+            res.send({
+                comments2: dbResult
+            })
+        }
+        catch(err){
+            res.send({message: err.message})
+        }
+    },
+    getLevel3: async (req: Request, res: Response):Promise<any> => {
+        try{
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const Comment2Id = req.params.Comment2Id as string;
+            const dbResult = userId?
+             await postCommentModel.getLevel3(Comment2Id, userId):
+             await postCommentModel.getLevel3(Comment2Id)
+            
+            res.send({
+                comments3: dbResult
             })
         }
         catch(err){

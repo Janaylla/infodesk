@@ -4,13 +4,19 @@ import Button from '../../components/Button/Button'
 import { IconButton } from '@material-ui/core'
 import { CloseOutlined, Visibility, VisibilityOff } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
-import { goToBack, goToSingUp } from '../../Routes/Coordinators'
+import { goToBack} from '../../Routes/Coordinators'
 import { useForm } from '../../hooks/useForm'
-import { useLogin } from '../../hooks/usePostData'
+import { useSingUp } from '../../hooks/usePostData'
 import {Form} from '../../GlobalStyle'
-const LoginPage = () => {
-
-  const [postLogin, snack] = useLogin()
+const SingUpPage = () => {
+  const initialForm = {
+    email:"", 
+    password:"", 
+    userName:"", 
+    lastName:"", 
+    firstName:""
+  }
+  const [postLogin, snack] = useSingUp(initialForm)
   const formInitial = {
     email: "",
     password: ""
@@ -22,6 +28,9 @@ const LoginPage = () => {
     e.preventDefault();
     postLogin(form)
   }
+  const sing = () => {
+    
+  }
   const onClickPasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility)
   }
@@ -32,14 +41,27 @@ const LoginPage = () => {
       </IconButton>
     </DivAbsolute>
     <Form onSubmit={login}>
-      <h1>Login</h1>
-      <h2>Becoming our member rou will have the opportunity to share your experience with other students</h2>
+      <h1>Sing Up</h1>
+      <h2>Becoming our member you will have the opportunity to share experience with other students</h2>
       <label>
-        <h3>E-mail</h3>
-        <input name="email" value={form['email']} onChange={onChange} />
+        <h3>Fist Name</h3>
+        <input name="firstName" value={form['firstName']} onChange={onChange} />
       </label>
       <label>
-        <h3>Password</h3>
+        <h3>Last Name</h3>
+        <input name="lastName" value={form['lastName']} onChange={onChange} />
+      </label>
+      <label>
+        <h3>User Name</h3>
+        <input name="userName" value={form['userName']} onChange={onChange} />
+      </label>
+      <label>
+        <h3>Email</h3>
+        <input name="email" value={form['email']} onChange={onChange} />
+        
+      </label>
+      <label>
+        <h3>Make a password</h3>
         <input
           name="password"
           value={form['password']}
@@ -51,11 +73,10 @@ const LoginPage = () => {
             <VisibilityOff />}
         </IconPassword>
       </label>
-      <Button color="orange" type="submit">Login</Button>
-      <Button color="blue" onClick={() => goToSingUp(history)}>Sing Up</Button>
+      <Button color="orange" type="submit">Sing Up</Button>
       {snack}
     </Form>
   </Main>
 };
 
-export default LoginPage;
+export default SingUpPage;
