@@ -3,9 +3,9 @@ import { DivCardComment, DivLike, Reply } from './styled'
 import { ThumbDownOutlined, ThumbUpAltOutlined, ThumbDown, ThumbUp } from '@material-ui/icons'
 import {usePostData} from '../../hooks/usePostData'
 
-const CardComment = ({ text, name, likes, myLike, id, update, disLikes }) => {
+const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type}) => {
     const [like, setLike] = useState(myLike)
-    const [postLike, loadingLike, successLike] = usePostData(`/post/comment3/${id}/like?like=${like}`)
+    const [postLike, loadingLike, successLike] = usePostData(`/${type}/comment3/${id}/like?like=${like}`)
    
     const onClickLike = (lk) =>{
         setLike(lk)

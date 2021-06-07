@@ -27,10 +27,10 @@ margin: 0px ${marginValue};
 justify-content: flex-start;
 
 img{
-    background-color: grey;
     width: 30px;
     height: 30px;
     margin: 5px;
+    cursor: pointer;
 }
 >div{
 align-items: flex-start;

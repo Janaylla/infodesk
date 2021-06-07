@@ -39,9 +39,9 @@ const postModel = {
             (SELECT COUNT(*) FROM likepostslevelcomments1 as l
              WHERE l.Comment1Id = c.Id AND l.liked = true) as 'Likes',  
             (SELECT COUNT(*) FROM likepostslevelcomments1 as l
-             WHERE l.Comment1Id = c.Id AND l.liked = false) as 'DisLikes',
-            ${userId && `(select l.liked from likepostslevelcomments1 as l 
-            WHERE l.UserId = `+userId+` and l.Comment1Id = c.Id) as myLike`}
+             WHERE l.Comment1Id = c.Id AND l.liked = false) as 'DisLikes'
+            ${userId ? `,(select l.liked from likepostslevelcomments1 as l 
+            WHERE l.UserId = `+userId+` and l.Comment1Id = c.Id) as myLike`: ""}
             FROM postslevelcomments1 as c
             LEFT JOIN registrationdata as r ON r.Id = c.UserId
             LEFT JOIN likepostslevelcomments1 as l on  l.UserId = c.UserId 
@@ -63,9 +63,9 @@ const postModel = {
             (SELECT COUNT(*) FROM likepostslevelcomments2 as l
              WHERE l.Comment2Id = c2.Id AND l.liked = true) as 'Likes',  
             (SELECT COUNT(*) FROM likepostslevelcomments2 as l
-             WHERE l.Comment2Id = c2.Id AND l.liked = false) as 'DisLikes',
-            ${userId && `(select l.liked from likepostslevelcomments2 as l 
-            WHERE l.UserId = `+userId+` and l.Comment2Id = c2.Id) as myLike`}
+             WHERE l.Comment2Id = c2.Id AND l.liked = false) as 'DisLikes'
+             ${userId ? `,(select l.liked from likepostslevelcomments2 as l 
+            WHERE l.UserId = `+userId+` and l.Comment2Id = c2.Id) as myLike`:""}
             FROM postslevelcomments2 as c2
             LEFT JOIN registrationdata as r ON r.Id = c2.UserId
             LEFT JOIN likepostslevelcomments2 as l on  l.UserId = c2.UserId 
@@ -87,9 +87,9 @@ const postModel = {
             (SELECT COUNT(*) FROM likepostslevelcomments3 as l
              WHERE l.Comment3Id = c3.Id AND l.liked = true) as 'Likes',  
             (SELECT COUNT(*) FROM likepostslevelcomments3 as l
-             WHERE l.Comment3Id = c3.Id AND l.liked = false) as 'DisLikes',
-             ${userId && `(select l.liked from likepostslevelcomments3 as l 
-            WHERE l.UserId = `+userId+` and l.Comment3Id = c3.Id) as myLike`}
+             WHERE l.Comment3Id = c3.Id AND l.liked = false) as 'DisLikes'
+             ${userId ? `,(select l.liked from likepostslevelcomments3 as l 
+            WHERE l.UserId = `+userId+` and l.Comment3Id = c3.Id) as myLike`: ""}
             FROM postslevelcomments3 as c3
             LEFT JOIN registrationdata as r ON r.Id = c3.UserId
             LEFT JOIN likepostslevelcomments3 as l on  l.UserId = c3.UserId 

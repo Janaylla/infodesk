@@ -29,6 +29,23 @@ const classController = {
             res.send({message: err.message})
         }
     },
+    getByUserId: async (req: Request, res: Response):Promise<any> => {
+        try{
+
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+            if(isNaN(userId)){
+                throw new Error("Token invalid")
+            }
+            const dbResult = await postModel.getByUserId(userId);
+            res.send({
+                posts: dbResult
+            })
+        }
+        catch(err){
+            res.send({message: err.message})
+        }
+    },
     create: async (req: Request, res: Response):Promise<any> => {
         try{
             const token = req.headers.authorization as string;

@@ -23,7 +23,7 @@ export const usePostData = (path) => {
             setLoading(false)
         })
         .catch((err) => {
-          console.log(`${BASE_URL}${path}`)
+          console.log(err)
           setSuccess(-1)
           setLoading(false)
         });

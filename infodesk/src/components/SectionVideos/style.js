@@ -25,12 +25,18 @@ button{
 }
 video{
     width: 350px;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 >div{
     margin: 0 0 ${marginValue} 0;
 }
 `
+export const DivVideo = styled.div`
 
+`
 export const Title = styled.div`
 h3{
     ${text1}
@@ -47,6 +53,11 @@ h2{
     font-weight: 800;
     font-size: 18px;
 }
+    opacity: 0.8;
+    :hover{
+        opacity: 1;
+    }
+    cursor: pointer;
 `
 export const DivVideos= styled.div`
     display: flex;

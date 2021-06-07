@@ -19,6 +19,10 @@ export const goToVideos = (history) => {
 export const goToVideo = (history, video) => {
   history.push(`/videos/${video}`);
 };
+
+export const goToStory = (history) => {
+  history.push(`/stories`);
+};
 export const goToBack = (history) => {
   history.goBack();
 }

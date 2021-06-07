@@ -14,7 +14,11 @@ export const useRequestData = (path, initialState, keyObject) => {
           },
         })
         .then((response) => {
-          setData(response.data[keyObject]);
+          if(keyObject)
+            setData(response.data[keyObject]);
+          else{
+            setData(response.data);
+          }
         })
         .catch((err) => {
           console.log(err.message)

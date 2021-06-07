@@ -12,7 +12,7 @@ function SimpleDialog({onClose, open, update}) {
 
   const formInitial = {
     text: "",
-    accommodation: "",
+    accommodation: "Room",
     price: ""
   }
 useEffect(() => {
@@ -40,7 +40,11 @@ const [form, onChange, resetForm] = useForm(formInitial)
         <h1>Crete Post</h1>
       <label>
         <h3>Type of accommodation</h3>
-        <input name="accommodation" value={form['accommodation']} onChange={onChange} />
+        <select name="accommodation" value={form['accommodation']} onChange={onChange}>
+        <option>Room</option>
+        <option>Studio</option>
+        <option>Apartment</option>
+        </select>
       </label>
       <label>
         <h3>Price</h3>

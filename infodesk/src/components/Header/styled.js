@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {marginValue} from '../../GlobalStyle'
+import {marginValue, colorGrey} from '../../GlobalStyle'
 export const Main = styled.div`
   width: 100%;
   height: 70px;
@@ -7,6 +7,7 @@ export const Main = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 10px ${marginValue};
+  
 `;
 export const Left = styled.nav`
   display: flex;
@@ -14,6 +15,7 @@ export const Left = styled.nav`
     height: 50px;
     width: auto;
         margin: 0 ${marginValue};;
+        cursor: pointer;
     }
    
 `;
@@ -30,7 +32,6 @@ align-items: center;
         }
     }
     button{
-        
         margin: 0 ${marginValue};
     }
 `;

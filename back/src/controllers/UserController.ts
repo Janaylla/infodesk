@@ -33,6 +33,22 @@ const classController = {
             res.send({message: err.message})
         }
     },
+    getById: async (req: Request, res: Response):Promise<any> => {
+        try{
+            const token = req.headers.authorization as string;
+
+            const userId = await userModel.getIdToken(token? token: "")
+            
+            const dbResult = await userModel.getById(userId)
+
+            res.send({
+                user: dbResult
+            })
+        }
+        catch(err){
+            res.send({message: err.message})
+        }
+    },
     create:async (req: Request, res: Response):Promise<any> => {
         try{                
             const {email, password, userName, lastName, firstName}:singUp = req.body;

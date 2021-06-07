@@ -5,7 +5,7 @@ const postModel = {
         try{
             const result =  await connection.raw(`
             SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, 
-            r.FirstName, r.LastName, lg.Email,
+            r.FirstName, r.LastName, lg.Email, r.UserName,
             count(liked) as 'like', count(c.Id) as 'comments', p.typeOfAccommodation 
             FROM posts AS p
             LEFT JOIN likeposts as l ON l.PostsId = p.Id
@@ -28,6 +28,27 @@ const postModel = {
             `)
             
             return result[0][0];
+        }
+        catch(err){
+            return (err.message || err.sqlMessage)
+        }
+    },
+    getByUserId: async (id:string|number):Promise<any> => {
+        try{
+            const result =  await connection.raw(`
+            SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, 
+            r.FirstName, r.LastName, lg.Email, r.UserName,
+            count(liked) as 'like', count(c.Id) as 'comments', p.typeOfAccommodation 
+            FROM posts AS p
+            LEFT JOIN likeposts as l ON l.PostsId = p.Id
+            LEFT JOIN registrationdata as r ON r.Id = p.UserId
+            LEFT JOIN login as lg ON lg.Id = p.UserId
+            LEFT JOIN postslevelcomments1 as c on c.PostId = p.Id  
+            WHERE r.id = ${id}
+            group by p.Id
+            order by p.Date DESC
+            `)
+            return result[0];
         }
         catch(err){
             return (err.message || err.sqlMessage)
