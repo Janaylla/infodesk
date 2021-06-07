@@ -4,14 +4,14 @@ import Card from './CardVideo'
 import { ArrowForwardIos } from '@material-ui/icons'
 import { colorGrey } from '../../GlobalStyle'
 
-const Section = ({ colorSection, titleSection, videos }) => {
+const Section = ({ colorSection, titleSection, videos, DoNotShowIcon}) => {
 
   return <DivSection color={colorSection}>
 
     <h2> {titleSection}</h2>
 
     <DivVideos>{
-      videos.map((video) => {
+        videos && videos.map((video) => {
         return <Card
           id={video.Id}
           title={video.Title}
@@ -20,9 +20,9 @@ const Section = ({ colorSection, titleSection, videos }) => {
       })
     }
     </DivVideos>
-    <ButtonIcon>
+    {!DoNotShowIcon && <ButtonIcon>
       <ArrowForwardIos style={{ color: colorGrey }} />
-    </ButtonIcon>
+    </ButtonIcon>}
   </DivSection>
 };
 

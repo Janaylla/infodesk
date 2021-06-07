@@ -4,6 +4,10 @@ import {colorBlueDark, marginValue, text2, text3, marginValue2, text1} from '../
 
 export const DivSection = styled.section`
     background-color: ${colorBlueDark};
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   flex-direction: column;
     h6{
         ${text1}
         color:white;
@@ -15,10 +19,11 @@ export const DivSection = styled.section`
     }
     padding: ${marginValue2};
     video{
-        width: 900px;
+        width:  800px;
     }
     >div{
         margin: 20px 0;
+        width: 800px;
     }
 `
 

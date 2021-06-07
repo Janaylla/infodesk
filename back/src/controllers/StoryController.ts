@@ -5,9 +5,11 @@ import story from '../types/story'
 
 const classController = {
     get: async (req: Request, res: Response):Promise<any> => {
-        try{
-            const dbResult = await StoryModel.get();
-
+        try{    
+            const token = req.headers.authorization as string;
+            const UserId =token? await userModel.getIdToken(token): false;
+            const dbResult = Number(UserId) ? await StoryModel.get(UserId):
+            await StoryModel.get()
             res.send({
                 stories: dbResult
             })
@@ -37,15 +39,15 @@ const classController = {
             const currentDate = new Date();
             
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
-            console.log(date)
+          
             const dbResult = await StoryModel.create({userId, date, title, text});
             console.log(dbResult)
             if(dbResult != 1){
                 res.statusCode = 400;
-                throw new Error("story not inserted")
+                throw new Error("Story not inserted")
             }
             res.send({
-                message: "story inserted"
+                message: "Story inserted"
             })
         }
         catch(err){
@@ -62,9 +64,9 @@ const classController = {
             }
             const id = req.params.id as string;
             let like = req.query.like as string|number;
+            console.log(like, userId,id)
             like =  (Number(like) === 1|| Number(like) === -1) ? Number(like) : 0;
             const dbResult = await StoryModel.like(id, userId, like);
-
             if(dbResult != 1){
                 res.statusCode = 400;
                 throw new Error("story marked as I didn't like")

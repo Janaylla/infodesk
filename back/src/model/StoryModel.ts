@@ -1,12 +1,18 @@
 import {connection} from '../connection'
 import story from '../types/story'
 const storyModel = {
-    get: async ():Promise<any> => {
+    get: async (UserId?:string):Promise<any> => {
         try{
             const result =  await connection.raw(`
-            SELECT s.Id, s.Date, s.Title, s.Text, s.UserId, 
+            SELECT s.Id, s.Date, s.Title, s.Text, s.UserId, s.Topic,
             r.FirstName, r.LastName, lg.Email, r.UserName,
-            count(liked) as 'like', count(c.Id) as 'comments'
+             (SELECT COUNT(*) FROM likestory as l
+             WHERE l.StoryId  = s.Id AND l.liked = true) as 'Likes',  
+            (SELECT COUNT(*) FROM likestory as l
+             WHERE l.StoryId = s.Id AND l.liked = false) as 'DisLikes',
+           ${UserId ? `(select l.liked from likestory as l 
+            WHERE l.UserId = `+UserId+` and l.StoryId = s.Id) as 'MyLike',`:""}
+            count(c.Id) as 'comments'
             FROM stories AS s
             LEFT JOIN likestory as l ON l.StoryId = s.Id
             LEFT JOIN registrationdata as r ON r.Id = s.UserId
@@ -50,7 +56,7 @@ const storyModel = {
         
         try{
             const result1 = await connection.raw(`
-                DELETE FROM likestory WHERE UserId = ${id_user} and storiesId = ${id}
+                DELETE FROM likestory WHERE UserId = ${id_user} and StoryId = ${id}
             `)
             if(like === -1 || like === 1){
             const result =  await connection.raw(`

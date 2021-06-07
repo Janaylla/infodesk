@@ -1,19 +1,20 @@
-import Router from './router/routers';
+import {postRouter} from './router/postRouter'
+import {videoRouter} from './router/videoRouter'
+import {userRouter} from './router/userRouter'
+import {storyRouter} from './router/storyRouter'
 import express from "express";
 import cors from "cors";
 import { AddressInfo } from "net";
-import jwt from 'jsonwebtoken'
 import {config} from "dotenv";
-import knex from "knex";
 
 const server = express()
 server.use(express.json())
-server.use(cors())
-server.use(Router)
-
-server.use(express.json());
-
 server.use(cors());
+
+server.use("/post", postRouter)
+server.use("/video", videoRouter)
+server.use("/", userRouter)
+server.use("/story", storyRouter)
 
 config();
 

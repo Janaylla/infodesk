@@ -1,7 +1,7 @@
 import {Request, Response} from 'express'
-import VideoModel from '../model/VideoModel'
+import StoryModel from '../model/StoryModel'
 import userModel from '../model/userModel'
-import VideoCommentModel from '../model/VideoCommentModel'
+import StoryCommentModel from '../model/StoryCommentModel'
 import comment from '../types/comment'
 
 const classController = {
@@ -14,7 +14,7 @@ const classController = {
             
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
           
-            const dbResult = await VideoCommentModel.create({userId, text, date}, "Videoslevelcomments1", "VideoId", req.params.VideoId as string);
+            const dbResult = await StoryCommentModel.create({userId, text, date}, "Storieslevelcomments1", "StoryId", req.params.StoryId as string);
             
             console.log(dbResult)
             
@@ -39,7 +39,7 @@ const classController = {
             
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
           
-            const dbResult = await VideoCommentModel.create({userId, text, date}, "Videoslevelcomments2", "Comment1Id", req.params.Comment1Id as string);
+            const dbResult = await StoryCommentModel.create({userId, text, date}, "Storieslevelcomments2", "Comment1Id", req.params.Comment1Id as string);
             
             console.log(dbResult)
             if(dbResult != 1){
@@ -63,7 +63,7 @@ const classController = {
             
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
           
-            const dbResult = await VideoCommentModel.create({userId, text, date}, "Videoslevelcomments3", "Comment2Id", req.params.Comment2Id as string);
+            const dbResult = await StoryCommentModel.create({userId, text, date}, "Storieslevelcomments3", "Comment2Id", req.params.Comment2Id as string);
             
             console.log(dbResult)
             if(dbResult != 1){
@@ -91,7 +91,7 @@ const classController = {
 
             like =  (Number(like) === 1|| Number(like) === -1) ? Number(like) : 0;
           
-            const dbResult = await VideoCommentModel.like(id, userId, like, "likeVideoslevelcomments1", "Comment1Id")
+            const dbResult = await StoryCommentModel.like(id, userId, like, "likeStorieslevelcomments1", "Comment1Id")
 
             if(dbResult != 1){
                 res.statusCode = 400;
@@ -126,7 +126,7 @@ const classController = {
             
             like =  (Number(like) === 1|| Number(like) === -1) ? Number(like) : 0;
           
-            const dbResult = await VideoCommentModel.like(id, userId, like, "likeVideoslevelcomments2", "Comment2Id")
+            const dbResult = await StoryCommentModel.like(id, userId, like, "likeStorieslevelcomments2", "Comment2Id")
 
             if(dbResult != 1){
                 res.statusCode = 400;
@@ -161,7 +161,7 @@ const classController = {
             
             like =  (Number(like) === 1|| Number(like) === -1) ? Number(like) : 0;
           
-            const dbResult = await VideoCommentModel.like(id, userId, like, "likeVideoslevelcomments3", "Comment3Id")
+            const dbResult = await StoryCommentModel.like(id, userId, like, "likeStorieslevelcomments3", "Comment3Id")
 
             if(dbResult != 1){
                 res.statusCode = 400;
@@ -188,10 +188,10 @@ const classController = {
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
 
-            const VideoId = req.params.VideoId as string;
+            const StoryId = req.params.StoryId as string;
             const dbResult = Number(userId)?
-             await VideoCommentModel.getLevel1(VideoId, userId):
-             await VideoCommentModel.getLevel1(VideoId)
+             await StoryCommentModel.getLevel1(StoryId, userId):
+             await StoryCommentModel.getLevel1(StoryId)
             
             res.send({
                 comments1: dbResult
@@ -208,8 +208,8 @@ const classController = {
 
             const Comment1Id = req.params.Comment1Id as string;
             const dbResult = Number(userId)?
-             await VideoCommentModel.getLevel2(Comment1Id, userId):
-             await VideoCommentModel.getLevel2(Comment1Id)
+             await StoryCommentModel.getLevel2(Comment1Id, userId):
+             await StoryCommentModel.getLevel2(Comment1Id)
             
             res.send({
                 comments2: dbResult
@@ -226,8 +226,8 @@ const classController = {
 
             const Comment2Id = req.params.Comment2Id as string;
             const dbResult = Number(userId)?
-             await VideoCommentModel.getLevel3(Comment2Id, userId):
-             await VideoCommentModel.getLevel3(Comment2Id)
+             await StoryCommentModel.getLevel3(Comment2Id, userId):
+             await StoryCommentModel.getLevel3(Comment2Id)
             
             res.send({
                 comments3: dbResult

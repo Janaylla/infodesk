@@ -93,6 +93,10 @@ GET  http://localhost:3003/post/comment1/1
 
 ###
 GET http://localhost:3003/post/all
+###
+GET http://localhost:3003/video/all
+###
+GET http://localhost:3003/story/all
 
 ###
 PUT http://localhost:3003/video/comment1/6

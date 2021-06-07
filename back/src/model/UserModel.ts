@@ -48,6 +48,20 @@ const userModel = {
             return (err.message || err.sqlMessage)
         }
     },
+    getById: async(id:string):Promise<any> =>{
+        try{
+            const result = await connection.raw(`
+                SELECT * FROM registrationdata WHERE id = ${id};
+            `)
+            if(!result[0].length){
+                throw new Error("User not found")
+            }
+            return result[0][0]
+        }
+        catch(err){
+            return (err.message || err.sqlMessage)
+        }
+    },
     create: async ({ email, firstName, lastName, password, userName }: singUp): Promise<any> => {
         try {
             const result1 = await connection.raw(`

@@ -185,10 +185,10 @@ const classController = {
     getLevel1: async (req: Request, res: Response):Promise<any> => {
         try{
             const token = req.headers.authorization as string;
-            const userId = await userModel.getIdToken(token)
+            const userId = await userModel.getIdToken(token||"")
 
             const PostId = req.params.PostId as string;
-            const dbResult = userId?
+            const dbResult = Number(userId)?
              await postCommentModel.getLevel1(PostId, userId):
              await postCommentModel.getLevel1(PostId)
             
@@ -203,10 +203,10 @@ const classController = {
     getLevel2: async (req: Request, res: Response):Promise<any> => {
         try{
             const token = req.headers.authorization as string;
-            const userId = await userModel.getIdToken(token)
+            const userId = await userModel.getIdToken(token||"")
 
             const Comment1Id = req.params.Comment1Id as string;
-            const dbResult = userId?
+            const dbResult = Number(userId)?
              await postCommentModel.getLevel2(Comment1Id, userId):
              await postCommentModel.getLevel2(Comment1Id)
             
@@ -221,10 +221,10 @@ const classController = {
     getLevel3: async (req: Request, res: Response):Promise<any> => {
         try{
             const token = req.headers.authorization as string;
-            const userId = await userModel.getIdToken(token)
+            const userId = await userModel.getIdToken(token||"")
 
             const Comment2Id = req.params.Comment2Id as string;
-            const dbResult = userId?
+            const dbResult = Number(userId)?
              await postCommentModel.getLevel3(Comment2Id, userId):
              await postCommentModel.getLevel3(Comment2Id)
             

@@ -8,7 +8,8 @@ import Section from '../../components/SectionWhatToDo/SectionWhatToDo'
 import Digid from '../../components/Digid/Digid'
 const VideoPage = () => {
 
-  return <Main>
+  return <>
+  <Main>
   <Header/>
   <Banner/>
   <Section s1/>
@@ -17,6 +18,7 @@ const VideoPage = () => {
   <Digid/>
   <Footer/>
   </Main>
+  </>
 };
 
 export default VideoPage;

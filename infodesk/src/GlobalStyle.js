@@ -16,22 +16,44 @@ export const text3 = "font-size: 20px;\ncolor:#707070;\nfont-weight: 700;\n"
 export const Nav = styled.nav`
     margin: 0 1.6vw;
     display: flex;
-    align-items: center;
+    align-items: stretch;
     ${text1}
     ul{
         display: flex;
         li{
-            margin: 0 10px;
+            padding: 0 10px;
             cursor: pointer;
             display: flex;
             align-items: center;
+
             svg{
                 font-size: 0.9rem;
                 
             }
+            ul{
+              display: none;
+            }
+            :hover ul{
+              display: initial;
+            }
         }
     }
 `
+export const SubMenu = styled.ul`
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+    top: 50px;
+    z-index: 1;
+    li{
+        height: 30px;
+        border-bottom: 0.5px solid #aaaaaa;
+        margin: 0 !important;
+        padding: 0 10px;
+    }
+`
+
 export const Title = styled.h1`
   color: ${colorGrey};
   font-weight: 400;
@@ -125,4 +147,30 @@ export const Form = styled.form`
       position: relative;
       width: 100%;
     }
+`
+
+export const LikedSaved = styled.div`
+            display: flex;
+            justify-content: space-between;
+                *{
+                    color: white;
+                    
+                }
+            .likes{
+                display: flex;
+                align-items: center;
+                p{
+                    font-size: 25px;
+                    color: white;
+                }
+            }
+                .likes :nth-child(1n+2){
+                    margin-left: 5px;
+                }
+                .likes :nth-child(-n+2){
+                 cursor: pointer;
+                }
+                svg{
+                  cursor: pointer;
+                }
 `

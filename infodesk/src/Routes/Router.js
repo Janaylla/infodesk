@@ -7,6 +7,8 @@ import VideosPage from "../screens/VideosPage/VideosPage";
 import FindPage from "../screens/FindPage/FindPage"
 import LoginPage from "../screens/LoginPage/LoginPage"
 import SingUpPage from '../screens/SingUpPage/SingUpPage'
+import StoryPage from '../screens/StoryPage/StoryPage'
+import AccountPage from '../screens/AccountPage/AccountPage'
 const Router = () => {
   return (
     <BrowserRouter>
@@ -29,6 +31,12 @@ const Router = () => {
         <Route exact path="/videos">
           <VideosPage />
         </Route>  
+        <Route exact path="/stories">
+          <StoryPage />
+        </Route>
+        <Route exact path="/account">
+          <AccountPage/>
+        </Route>
         <Route path="/videos/:id">
           <VideoPage />
         </Route> 

@@ -4,7 +4,7 @@ import Button from '../../components/Button/Button'
 import { IconButton } from '@material-ui/core'
 import { CloseOutlined, Visibility, VisibilityOff } from '@material-ui/icons'
 import { useHistory } from 'react-router-dom'
-import { goToBack, goToSingUp } from '../../Routes/Coordinators'
+import { goToHome, goToSingUp } from '../../Routes/Coordinators'
 import { useForm } from '../../hooks/useForm'
 import { useLogin } from '../../hooks/usePostData'
 import {Form} from '../../GlobalStyle'
@@ -27,7 +27,7 @@ const LoginPage = () => {
   }
   return <Main>
     <DivAbsolute>
-      <IconButton onClick={() => goToBack(history)}>
+      <IconButton onClick={() => goToHome(history)}>
         <CloseOutlined />
       </IconButton>
     </DivAbsolute>
