@@ -54,7 +54,8 @@ const classController = {
             const currentDate = new Date();
             
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
-            console.log(date)
+        
+
             const dbResult = await postModel.create({userId, description, date, price, accommodation});
             console.log(dbResult)
             if(dbResult != 1){
