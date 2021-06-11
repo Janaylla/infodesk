@@ -6,6 +6,7 @@ const Router = express.Router();
 Router.get('/all', Controller.story.get)
 Router.put('/:id/like', Controller.story.like)
 
+Router.put('/create', Controller.story.create)
 
 Router.get('/comment1/:StoryId', Controller.storyComment.getLevel1)
 Router.get('/comment2/:Comment1Id', Controller.storyComment.getLevel2)

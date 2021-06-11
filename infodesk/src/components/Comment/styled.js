@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Nav } from '../../GlobalStyle'
-import { colorBlueDark, marginValue, text2, text3, marginValue2, text1 } from '../../GlobalStyle'
+import { colorBlueDark, marginValue, text2, text3, marginValue2, text1, ArrowDown } from '../../GlobalStyle'
 
 export const DivCardComment = styled.div`
     display: flex;
@@ -54,4 +54,12 @@ export const Reply = styled.p`
             :hover{
                 opacity: 1;
             }
+`
+export const ShowCommentsSmall= styled(ArrowDown)`
+    font-size: 15px;
+    padding: 0px 0 3px 0;
+    svg{
+        width: 25px;
+    }
+
 `

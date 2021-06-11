@@ -4,16 +4,20 @@ import Comment from '../PostComment/PostComment'
 import CardComment from '../Comment/CardCommentLevel1'
 import { useRequestData } from '../../hooks/useRequestData'
 import { usePostData } from '../../hooks/usePostData'
-import {LikedSaved} from '../../GlobalStyle'
-import {ThumbDownOutlined, ThumbUpAltOutlined, ThumbDown, ThumbUp, BookmarkBorder, Bookmark, FiberPin } from '@material-ui/icons'
+import { LikedSaved, ArrowDown } from '../../GlobalStyle'
+import { ThumbDownOutlined, ThumbUpAltOutlined, ThumbDown, ThumbUp, BookmarkBorder, Bookmark, FiberPin } from '@material-ui/icons'
+import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons'
 
-const FindHome = ({id, title, userName, date, text, topic, disLikes, likes, myLike, save, update}) => {
+const FindHome = ({ id, title, userName, date, text, topic, disLikes, likes, myLike, save, update }) => {
 
+    const [query, setQuery] = useState("");
     const [comments, getComments] = useRequestData(`/story/comment1/${id}`, [], 'comments1')
     const [storyComments, loadingComment, successComment] = usePostData(`/story/comment1/${id}`)
     const [like, setLike] = useState(myLike)
-    const [postLike, loadingLike, successLike] = usePostData(`/story/${id}/like?like=${like}`) 
+    const [postLike, loadingLike, successLike] = usePostData(`/story/${id}/like?like=${like}`)
     const [textComment, setTextComment] = useState("")
+
+    const [showComments, setShowComments] = useState(false)
 
     const onClickCancel = () => {
         setTextComment("")
@@ -28,13 +32,13 @@ const FindHome = ({id, title, userName, date, text, topic, disLikes, likes, myLi
         }
     }, [loadingComment])
     useEffect(() => {
-            getComments()
+        getComments()
     }, [id])
     useEffect(() => {
         postLike();
     }, [like])
     useEffect(() => {
-        if(!loadingLike && successLike){
+        if (!loadingLike && successLike) {
             update()
         }
     }, [loadingLike])
@@ -43,14 +47,14 @@ const FindHome = ({id, title, userName, date, text, topic, disLikes, likes, myLi
             <DivCardHome>
                 <div className="mainAvatar">
                     <div className="avatar">
-                    
+
                     </div>
                 </div>
 
                 <div className="contentPost">
                     <div className="userName">
-                        <p>{userName}</p> 
-                        <p>{date}</p> 
+                        <p>{userName}</p>
+                        <p>{date}</p>
                     </div>
                     <div className="contentText">
                         <div className="text">
@@ -64,32 +68,37 @@ const FindHome = ({id, title, userName, date, text, topic, disLikes, likes, myLi
                                 </p>
                             </div>
                         </div>
-                        
+
                     </div>
                     <LikedSaved>
-                            <div className="likes">
-                               {myLike === 1 ? <ThumbUp onClick={() => setLike(0)}/>:
-                               <ThumbUpAltOutlined onClick={() => setLike(1)} />}
-                                 {myLike === 0 ? <ThumbDown onClick={() => setLike(0)} />:
-                                 <ThumbDownOutlined onClick={() => setLike(-1)} />}
-                                <p>{likes - disLikes}</p>
-                            </div>
-                            <div className="save">
-                                {save ?<Bookmark /> 
-                                :<BookmarkBorder  />}
-                            </div>
-                        </LikedSaved>
+                        <div className="likes">
+                            {myLike === 1 ? <ThumbUp onClick={() => setLike(0)} /> :
+                                <ThumbUpAltOutlined onClick={() => setLike(1)} />}
+                            {myLike === 0 ? <ThumbDown onClick={() => setLike(0)} /> :
+                                <ThumbDownOutlined onClick={() => setLike(-1)} />}
+                            <p>{likes}</p>
+                        </div>
+                    </LikedSaved>
+
+
                 </div>
             </DivCardHome>
+            
             <Comment
                 onClickComment={onClickComment}
                 onClickCancel={onClickCancel}
                 onChange={(e) => setTextComment(e.target.value)}
                 value={textComment}
             />
-
+{
+                    comments.length > 0 && (
+                        showComments ?
+                            <ArrowDown onClick={() => setShowComments(false)}><KeyboardArrowUp />Hide comments</ArrowDown> :
+                            <ArrowDown onClick={() => setShowComments(true)}><KeyboardArrowDown />Show comments</ArrowDown>
+                    )
+                }
             <DivHomeComments>
-               {comments.map((comments) => {
+                { showComments && comments.map((comments) => {
                     return <CardComment
                         name={comments.UserName}
                         text={comments.Text}
@@ -100,7 +109,7 @@ const FindHome = ({id, title, userName, date, text, topic, disLikes, likes, myLi
                         update={getComments}
                         type={"story"}
                     />
-                })} 
+                })}
             </DivHomeComments>
         </>
     )

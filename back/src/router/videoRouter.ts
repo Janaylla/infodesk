@@ -4,6 +4,8 @@ import Controller from '../controllers/Controller'
 const Router = express.Router();
 Router.get('/all', Controller.video.get)
 Router.get('/favorite', Controller.video.getByFavoriteUser)
+Router.put('/:id/like', Controller.video.like)
+
 Router.get('/:id', Controller.video.getById)
 
 Router.get('/comment1/:VideoId', Controller.videoComment.getLevel1)

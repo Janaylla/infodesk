@@ -76,6 +76,13 @@ export const DivSearch = styled.div`
     .checkbox{
         display: flex;
         flex-direction: column;
+    margin-bottom: 10px;
+    }
+    label{
+      cursor: pointer;
+      :hover{
+        opacity: 0.7;
+      }
     }
     form{        
         display: flex;
@@ -173,4 +180,14 @@ export const LikedSaved = styled.div`
                 svg{
                   cursor: pointer;
                 }
+`
+export const ArrowDown = styled.h5`
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 5px 0 15px 0;
+  cursor: pointer;
+  *{
+    color: white;
+  }
 `

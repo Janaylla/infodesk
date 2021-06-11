@@ -6,8 +6,24 @@ import post from '../types/post'
 const classController = {
     get: async (req: Request, res: Response):Promise<any> => {
         try{
-            const dbResult = await postModel.get();
+            const {room, studio, apartment, date, noData} = req.query;
+            let where = "";
+            where += room ? "# p.typeOfAccommodation ='room'#":''
+            where += studio ?"# p.typeOfAccommodation ='studio'#":''
+            where += apartment ?"# p.typeOfAccommodation ='apartment'#":''
 
+            
+            where = where.replace(/##/gi, " or ");
+            where = where.replace('#', "(");
+            where = where.replace('#', ")");
+             where += where ?
+             (date && !noData ? `and p.Date='${date}'`: ''):
+             (date && !noData? `p.Date = '${date}'`: '')
+             
+            const dbResult:[] = await postModel.get(where);
+
+           
+            console.log(where)
             res.send({
                 posts: dbResult
             })

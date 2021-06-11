@@ -209,7 +209,6 @@ const classController = {
             const dbResult = Number(userId)?
              await postCommentModel.getLevel2(Comment1Id, userId):
              await postCommentModel.getLevel2(Comment1Id)
-            
             res.send({
                 comments2: dbResult
             })

@@ -8,8 +8,37 @@ const classController = {
         try{    
             const token = req.headers.authorization as string;
             const UserId =token? await userModel.getIdToken(token): false;
-            const dbResult = Number(UserId) ? await StoryModel.get(UserId):
-            await StoryModel.get()
+            const topics = ['Documentation',
+            'Culture',
+            'Find_a_roommate',
+            'Student_loan', 'Banks',
+            'Law',
+            'Work',
+            'Bureaucracy',
+            'Daily_basis_en_the_NL',
+            'Transportation']
+
+            const {date, noData, order} = req.query;
+            let where = "";
+            topics.forEach((item)=>{
+                if(req.query[item]){
+                    where += `#s.Topic = '${item.replace(/_/gi, " ")}'#`;
+                }
+            })
+               
+            where = where.replace(/##/gi, " or ");
+            where = where.replace('#', "(");
+            where = where.replace('#', ")");
+             where += where ?
+             (date && !noData ? `and s.Date='${date}'`: ''):
+             (date && !noData? `s.Date = '${date}'`: '')
+
+            let orderBy = (order ===  'liked') ? 'Likes DESC':(
+            (order ===  'disLiked') ? 'Likes ASC':'');
+            console.log(req.query)
+            console.log(orderBy)
+            const dbResult = Number(UserId) ? await StoryModel.get(where, orderBy, UserId):
+            await StoryModel.get(where, orderBy)
             res.send({
                 stories: dbResult
             })
@@ -35,13 +64,14 @@ const classController = {
         try{
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
-            let {date,title,text}:story = req.body;
+            let {date,title,text, topic}:story = req.body;
             const currentDate = new Date();
             
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
           
-            const dbResult = await StoryModel.create({userId, date, title, text});
+            const dbResult = await StoryModel.create({userId, date, title, text, topic});
             console.log(dbResult)
+            console.log("Checguei")
             if(dbResult != 1){
                 res.statusCode = 400;
                 throw new Error("Story not inserted")

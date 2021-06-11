@@ -40,7 +40,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type}) =
                     <ThumbUpAltOutlined style={{ color: "white" }}
                     onClick={() => onClickLike(1)}/>
                     }
-                    <h6>{likes - disLikes}</h6>
+                    <h6>{likes}</h6>
                 </DivLike>
             </div>
 

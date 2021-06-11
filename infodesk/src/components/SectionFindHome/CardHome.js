@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
+import {ArrowDown} from '../../GlobalStyle'
 import { DivCardHome, DivHomeComments } from './styled'
 import Comment from '../PostComment/PostComment'
 import CardComment from '../Comment/CardCommentLevel1'
 import { useRequestData } from '../../hooks/useRequestData'
 import { usePostData } from '../../hooks/usePostData'
-
+import {KeyboardArrowDown, KeyboardArrowUp} from '@material-ui/icons'
 const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id , date}) => {
     const [comments, getComments] = useRequestData(`/post/comment1/${id}`, [], 'comments1')
     const [postComments, loading, success] = usePostData(`/post/comment1/${id}`)
 
-
+    const [showComments, setShowComments] = useState(false)
+    
     const [textComment, setTextComment] = useState("")
 
     const onClickCancel = () => {
@@ -72,9 +74,15 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
                 onChange={(e) => setTextComment(e.target.value)}
                 value={textComment}
             />
-
-            <DivHomeComments>
-                {comments.map((comments) => {
+            
+            {   
+             comments.length>0 &&(
+                showComments ?
+               <ArrowDown onClick={() => setShowComments(false)}><KeyboardArrowUp/>Hide comments</ArrowDown>:
+               <ArrowDown onClick={() => setShowComments(true)}><KeyboardArrowDown/>Show comments</ArrowDown>
+            )
+            }<DivHomeComments>
+                {showComments && comments.map((comments) => {
                     return <CardComment
                         name={comments.UserName}
                         text={comments.Text}

@@ -4,7 +4,7 @@ import {Nav, SubMenu} from '../../GlobalStyle'
 import { ReactComponent as Logo } from '../../assets/logo/Image1.svg'
 import { ArrowDropDown, Search } from '@material-ui/icons'
 import Button from '../../components/Button/Button'
-import {goToAbout, goToHome, goToVideos, goToFind, goToLogin, goToStory} from '../../Routes/Coordinators'
+import {goToAbout, goToHome, goToVideos, goToFind, goToLogin, goToStory, goToAccount} from '../../Routes/Coordinators'
 import {useHistory} from 'react-router-dom'
 
 export default function Header() {
@@ -12,7 +12,7 @@ export default function Header() {
   return (
     <Main>
       <Left>
-        <Logo className="logo" onClick={() => goToHome(history)}/>
+        {<Logo className="logo" onClick={() => goToHome(history)}/>}
         <Nav>
           <ul >
             <li>
@@ -59,9 +59,13 @@ export default function Header() {
           <input />
           <Search />
         </div>
-        <Button onClick={() => goToLogin(history)}>
+        {
+            localStorage.getItem("token")?
+            <Button onClick={() => goToAccount(history)}>
+          Account
+        </Button>:<Button onClick={() => goToLogin(history)}>
           Login
-        </Button>
+        </Button>}
       </Right>
     </Main>
   );

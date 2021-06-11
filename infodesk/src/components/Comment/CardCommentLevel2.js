@@ -1,10 +1,11 @@
 import React,{useState, useEffect} from "react";
-import { DivCardComment, DivLike, Reply } from './styled'
+import { DivCardComment, DivLike, Reply, ShowCommentsSmall } from './styled'
 import { ThumbDownOutlined, ThumbUpAltOutlined, ThumbDown, ThumbUp } from '@material-ui/icons'
 import {usePostData} from '../../hooks/usePostData'
 import {useRequestData} from '../../hooks/useRequestData'
 import Comment from '../PostComment/PostComment'
 import CardComment3 from './CardCommentLevel3'
+import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons'
 
 const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type }) => {
     const [like, setLike] = useState(myLike)
@@ -12,6 +13,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type }) 
     const [postComments, loadingComment, successComment] = usePostData(`/${type}/comment3/${id}`)
     const [comments, getComments3] = useRequestData(`/${type}/comment3/${id}`, [], 'comments3')
    
+    const [showComments, setShowComments] = useState(false)
     const [commenting, setCommenting] = useState(false)
     const [textComment, setTextComment] = useState("")
     const onClickLike = (lk) =>{
@@ -62,19 +64,26 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type }) 
                     <ThumbUpAltOutlined style={{ color: "white" }}
                     onClick={() => onClickLike(1)}/>
                     }
-                    <h6>{likes - disLikes}</h6>
+                    <h6>{likes}</h6>
                      {!commenting &&
                        <Reply onClick={() => setCommenting(true)}>Reply</Reply>
                     } 
-                 
+                    
                 </DivLike>
+                {
+                    comments.length > 0 && (
+                        showComments ?
+                            <ShowCommentsSmall onClick={() => setShowComments(false)}><KeyboardArrowUp />Hide comments</ShowCommentsSmall> :
+                            <ShowCommentsSmall onClick={() => setShowComments(true)}><KeyboardArrowDown />Show comments</ShowCommentsSmall>
+                    )
+                }
                 {commenting && <Comment
                         onClickComment={onClickComment}
                         onClickCancel={onClickCancel}
                         onChange={(e) => setTextComment(e.target.value)}
                         value={textComment}
                         />}
-                        {comments.map((comments2) =>{
+                        { showComments && comments.map((comments2) =>{
                         return  <CardComment3
                         name={comments2.UserName} 
                         text={comments2.Text} 

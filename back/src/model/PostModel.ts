@@ -1,7 +1,7 @@
 import {connection} from '../connection'
 import post from '../types/post'
 const postModel = {
-    get: async ():Promise<any> => {
+    get: async (where:string):Promise<any> => {
         try{
             const result =  await connection.raw(`
             SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, 
@@ -12,6 +12,7 @@ const postModel = {
             LEFT JOIN registrationdata as r ON r.Id = p.UserId
             LEFT JOIN login as lg ON lg.Id = p.UserId
             LEFT JOIN postslevelcomments1 as c on c.PostId = p.Id  
+            ${where?`WHERE ${where}`: ""}
             group by p.Id
             order by p.Date DESC
             `)

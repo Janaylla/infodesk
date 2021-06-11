@@ -4,19 +4,29 @@ import { DivSection, Comments, DivFind} from './styled'
 import Search from './FormSearch'
 import CardStory from './CardStory'
 import {useRequestData} from '../../hooks/useRequestData'
-import NewPost from '../NewPost/NewPost'
+import NewStory from '../NewStory/NewStory'
 const FindHome = () => {
-    const [stories, getStories] = useRequestData('/story/all', [], 'stories')
+    const [query, setQuery] = useState("");
+    const [stories, getStories] = useRequestData(`/story/all?${query}`, [], 'stories')
     const [openNewPost, setOpenNewPost] = useState(false);
     console.log(stories)
+    const topics = ['Documentation',
+    'Culture',
+    'Find_a_roommate',
+    'Student_loan', 'Banks',
+    'Law',
+    'Work',
+    'Bureaucracy',
+    'Daily_basis_en_the_NL',
+    'Transportation']
     return (
         <DivSection>
-            <Search/>
+            <Search update={getStories} setQuery={setQuery} query={query} topics={topics}/>
             <DivFind>
            <h2>Do you have place to announce?</h2>
-           <Button color="orange" onClick={() => setOpenNewPost(true)}>Post It</Button>
+           <Button color="orange" onClick={() => setOpenNewPost(true)}>Story It</Button>
 
-             <NewPost open={openNewPost} update={getStories} setOpen={setOpenNewPost}/> 
+             <NewStory topics={topics} open={openNewPost} update={getStories} setOpen={setOpenNewPost}/> 
 
             <Comments>
                 {
