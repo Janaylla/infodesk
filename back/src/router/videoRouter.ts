@@ -21,6 +21,10 @@ Router.put('/comment2/:id/like', Controller.videoComment.likeLevel2)
 Router.put('/comment3/:id/like', Controller.videoComment.likeLevel3)
 
 Router.put('/:id/favorite', Controller.video.favorite)
+
 // ?favorite=1 para s
 
+Router.delete('/comment3/:id', Controller.videoComment.delLevel3)
+Router.delete('/comment2/:id', Controller.videoComment.delLevel2)
+Router.delete('/comment1/:id', Controller.videoComment.delLevel1)
 export {Router as videoRouter}

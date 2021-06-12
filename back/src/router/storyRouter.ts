@@ -18,4 +18,9 @@ Router.put('/comment1/:id/like', Controller.storyComment.likeLevel1)
 Router.put('/comment2/:id/like', Controller.storyComment.likeLevel2)
 Router.put('/comment3/:id/like', Controller.storyComment.likeLevel3)
 
+Router.delete('/comment3/:id', Controller.storyComment.delLevel3)
+Router.delete('/comment2/:id', Controller.storyComment.delLevel2)
+Router.delete('/comment1/:id', Controller.storyComment.delLevel1)
+Router.delete('/:id', Controller.story.del)
+
 export {Router as storyRouter}

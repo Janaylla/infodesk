@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Nav } from '../../GlobalStyle'
-import { colorBlueDark, marginValue, text2, text3, marginValue2, text1 } from '../../GlobalStyle'
+import { colorBlueDark, marginValue, text2, text3, marginValue2, colorGrey } from '../../GlobalStyle'
 export const DivSection = styled.section`
     background-color: ${colorBlueDark};
     display: flex;
@@ -76,6 +76,32 @@ p{
             }
         }
 }
+
+.delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+            button{
+            border: black 1px  ${colorGrey};
+            color: ${colorGrey};
+            background-color: white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            cursor: pointer;
+            position: absolute;
+            right: 0px;
+            top: 28px;
+        }
+        svg{
+            color: ${colorGrey};
+            cursor: pointer;
+            :hover{
+                opacity: 0.6;
+            }
+        }
+        }
 `
 
 export const DivHomeComments = styled.div`

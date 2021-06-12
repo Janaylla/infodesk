@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { DivCardComment, DivLike, Reply, ShowCommentsSmall } from './styled'
+import { DivCardComment, DivLike, Reply, ShowCommentsSmall, Title } from './styled'
 import { ThumbDownOutlined, ThumbUpAltOutlined, ThumbDown, ThumbUp } from '@material-ui/icons'
 import { usePostData } from '../../hooks/usePostData'
 import { useRequestData } from '../../hooks/useRequestData'
 import Comment from '../PostComment/PostComment'
 import CardComment2 from './CardCommentLevel2'
-import { KeyboardArrowDown, KeyboardArrowUp } from '@material-ui/icons'
+import { KeyboardArrowDown, KeyboardArrowUp, MoreHoriz } from '@material-ui/icons'
+import { useDelDate } from '../../hooks/useDelDate'
 
-const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type }) => {
+const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type, 
+    myComment }) => {
     const [like, setLike] = useState(myLike)
     const [postLike, loadingLike, successLike] = usePostData(`/${type}/comment1/${id}/like?like=${like}`)
     const [postComments, loadingComment, successComment] = usePostData(`/${type}/comment2/${id}`)
@@ -16,6 +18,8 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type }) 
     const [commenting, setCommenting] = useState(false)
     const [textComment, setTextComment] = useState("")
     const [showComments, setShowComments] = useState(false)
+    const [showButtonDelete, setShowButtonDelete] = useState(false)
+    const [dataDel, loadingDel, successDel] = useDelDate(`/${type}/comment1`)
     const onClickLike = (lk) => {
         setLike(lk)
     }
@@ -37,7 +41,12 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type }) 
             setCommenting(false)
         }
     }, [loadingComment])
-
+    useEffect(() => {
+        if (!loadingDel && successDel){
+           setShowButtonDelete(false)
+           update()
+        }
+    }, [loadingDel])
     useEffect(() => {
         if (!loadingLike && successLike)
             update()
@@ -51,8 +60,17 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type }) 
             <div className="avatar">
             </div>
             <div className="text">
-                <h3>{name}</h3>
-                <p>{text}</p>
+            <Title>
+                    <h3>{name}</h3>
+                    <div className="delete">
+                        {myComment === 1 &&
+                            <>
+                                <MoreHoriz onClick={() => setShowButtonDelete(!showButtonDelete)} />
+                                {showButtonDelete && <button onClick={() => dataDel(id)}>Delete</button>}
+                            </>}
+                    </div>
+                </Title>
+                    <p>{text}</p>
                 <DivLike>
                     {myLike === 0 ?
                         <ThumbDown style={{ color: "white" }} onClick={() => onClickLike(0)} /> :
@@ -94,6 +112,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type }) 
                         id={comments2.Id}
                         update={getComments2}
                         type={type}
+                        myComment={comments2.MyComment}
                     />
                 })
                 }

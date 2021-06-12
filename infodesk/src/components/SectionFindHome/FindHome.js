@@ -31,6 +31,8 @@ const FindHome = () => {
                         id={post.Id}
                         userName={post.UserName}
                         date={post.Date}
+                        update={getPosts}
+                        myComment={post.MyComment}
                         />
                     })
                 }

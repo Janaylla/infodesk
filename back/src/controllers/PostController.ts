@@ -7,6 +7,8 @@ const classController = {
     get: async (req: Request, res: Response):Promise<any> => {
         try{
             const {room, studio, apartment, date, noData} = req.query;
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
             let where = "";
             where += room ? "# p.typeOfAccommodation ='room'#":''
             where += studio ?"# p.typeOfAccommodation ='studio'#":''
@@ -86,37 +88,23 @@ const classController = {
             res.send({message: err.message})
         }
     },
-    like: async (req: Request, res: Response):Promise<any> => {
-        try{
+    del: async (req: Request, res: Response): Promise<any> => {
+        try {
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
-            
-            if(!userId){
-                throw new Error(`User Invalid`)
-            }
+
             const id = req.params.id as string;
-            let like = req.query.like as string|number;
-            like =  (Number(like) === 1|| Number(like) === -1) ? Number(like) : 0;
-            const dbResult = await postModel.like(id, userId, like);
-
-            if(dbResult != 1){
-                res.statusCode = 400;
-                throw new Error("Post marked as I didn't like")
+            const dbResult = await postModel.del(id, userId)
+            console.log(dbResult)
+            if(dbResult !== 1){
+                throw new Error("Comment not delete");
             }
-            let messageSuccess =  "";
-            if(like === 1)
-                messageSuccess = "Post marked as I liked"
-            else if(like === -1)
-                messageSuccess = "Post marked as I disliked"
-            else
-                messageSuccess = "Demarcated like or dislike"
-
             res.send({
-                message: messageSuccess
+                message: "Comment deleted"
             })
         }
-        catch(err){
-            res.send({message: err.message})
+        catch (err) {
+            res.status(400).send({ message: err.message })
         }
     }
 } 

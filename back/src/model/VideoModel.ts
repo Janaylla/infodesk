@@ -86,6 +86,6 @@ const videoModel = {
         catch (err) {
             return (err.message || err.sqlMessage)
         }
-    },
+    }
 }
 export default videoModel;

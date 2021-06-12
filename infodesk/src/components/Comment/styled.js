@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Nav } from '../../GlobalStyle'
-import { colorBlueDark, marginValue, text2, text3, marginValue2, text1, ArrowDown } from '../../GlobalStyle'
+import { colorBlueDark, colorGrey, marginValue, text2, text3, marginValue2, text1, ArrowDown } from '../../GlobalStyle'
 
 export const DivCardComment = styled.div`
     display: flex;
@@ -16,18 +16,18 @@ export const DivCardComment = styled.div`
         max-width: 800px;
         padding: 10px;
         flex-grow: 1;
-        h3{
-            ${text3}
-            color:white;
-            margin: 3px 0 10px 0;
-            font-size: 15px;
-        }
         p{
             ${text1}
             color:white;
            
         }
     }
+    h3{
+            ${text3}
+            color:white;
+            margin: 3px 0 10px 0;
+            font-size: 15px;
+        }
 `
 export const DivLike = styled.div`
     display: flex;
@@ -62,4 +62,34 @@ export const ShowCommentsSmall= styled(ArrowDown)`
         width: 25px;
     }
 
+`
+export const Title = styled.div`
+    display: flex;
+    justify-content: space-between;
+       
+    position: relative;
+        *{
+            color:white;
+        }
+        .delete {
+            button{
+            border: black 1px  ${colorGrey};
+            color: ${colorGrey};
+            background-color: white;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            padding: 5px 10px;
+            cursor: pointer;
+            position: absolute;
+            right: 0px;
+            top: 28px;
+        }
+        svg{
+            cursor: pointer;
+            :hover{
+                opacity: 0.6;
+            }
+        }
+        }
 `

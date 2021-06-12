@@ -5,14 +5,17 @@ import Comment from '../PostComment/PostComment'
 import CardComment from '../Comment/CardCommentLevel1'
 import { useRequestData } from '../../hooks/useRequestData'
 import { usePostData } from '../../hooks/usePostData'
-import {KeyboardArrowDown, KeyboardArrowUp} from '@material-ui/icons'
-const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id , date}) => {
+import { useDelDate } from '../../hooks/useDelDate'
+import {KeyboardArrowDown, KeyboardArrowUp, MoreHoriz} from '@material-ui/icons'
+const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id , date, myComment, update}) => {
     const [comments, getComments] = useRequestData(`/post/comment1/${id}`, [], 'comments1')
     const [postComments, loading, success] = usePostData(`/post/comment1/${id}`)
 
     const [showComments, setShowComments] = useState(false)
     
     const [textComment, setTextComment] = useState("")
+    const [showButtonDelete, setShowButtonDelete] = useState(false)
+    const [dataDel, loadingDel, successDel] = useDelDate(`/story`)
 
     const onClickCancel = () => {
         setTextComment("")
@@ -29,6 +32,13 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
     useEffect(() => {
             getComments()
     }, [id])
+    
+    useEffect(() => {
+        if (!loadingDel && successDel){
+           setShowButtonDelete(false)
+           update()
+        }
+    }, [loadingDel])
     return (
         <>
             <DivCardHome>
@@ -66,6 +76,12 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
                             </div>
                         </div>
                     </div>
+                    {myComment === 1 &&
+                            <>
+                                <MoreHoriz onClick={() => setShowButtonDelete(!showButtonDelete)} />
+                                {showButtonDelete && 
+                                <button onClick={() => dataDel(id)}>Delete</button>}
+                            </>}
                 </div>
             </DivCardHome>
             <Comment
@@ -92,6 +108,7 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
                         id={comments.Id}
                         update={getComments}
                         type={"post"}
+                        myComment={comments.MyComment}
                     />
                 })}
             </DivHomeComments>

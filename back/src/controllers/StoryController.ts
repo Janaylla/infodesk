@@ -116,6 +116,30 @@ const classController = {
         catch(err){
             res.send({message: err.message})
         }
+    },
+    del: async (req: Request, res: Response): Promise<any> => {
+        try {
+            console.log("Cheguei")
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const id = req.params.id as string;
+            
+            const dbResult = Number(userId)?
+            await StoryModel.del(id, userId):
+            await StoryModel.del(id)
+            
+            console.log(dbResult)
+            if(dbResult !== 1){
+                throw new Error("Comment not delete");
+            }
+            res.send({
+                message: "Comment deleted"
+            })
+        }
+        catch (err) {
+            res.status(400).send({ message: err.message })
+        }
     }
 } 
 export default classController 

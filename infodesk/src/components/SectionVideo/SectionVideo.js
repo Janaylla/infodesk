@@ -98,6 +98,7 @@ const SectionVideo = () => {
                         id={comments.Id}
                         update={getComments}
                         type={"video"}
+                        myComment={comments.MyComment}
                     />
                 })
                 }
