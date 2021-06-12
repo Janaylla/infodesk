@@ -6,8 +6,26 @@ import post from '../types/post'
 const classController = {
     get: async (req: Request, res: Response):Promise<any> => {
         try{
-            const dbResult = await postModel.get();
+            const {room, studio, apartment, date, noData} = req.query;
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+            let where = "";
+            where += room ? "# p.typeOfAccommodation ='room'#":''
+            where += studio ?"# p.typeOfAccommodation ='studio'#":''
+            where += apartment ?"# p.typeOfAccommodation ='apartment'#":''
 
+            
+            where = where.replace(/##/gi, " or ");
+            where = where.replace('#', "(");
+            where = where.replace('#', ")");
+             where += where ?
+             (date && !noData ? `and p.Date='${date}'`: ''):
+             (date && !noData? `p.Date = '${date}'`: '')
+             
+            const dbResult:[] = await postModel.get(where);
+
+           
+            console.log(where)
             res.send({
                 posts: dbResult
             })
@@ -54,7 +72,8 @@ const classController = {
             const currentDate = new Date();
             
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
-            console.log(date)
+        
+
             const dbResult = await postModel.create({userId, description, date, price, accommodation});
             console.log(dbResult)
             if(dbResult != 1){
@@ -69,37 +88,23 @@ const classController = {
             res.send({message: err.message})
         }
     },
-    like: async (req: Request, res: Response):Promise<any> => {
-        try{
+    del: async (req: Request, res: Response): Promise<any> => {
+        try {
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
-            
-            if(!userId){
-                throw new Error(`User Invalid`)
-            }
+
             const id = req.params.id as string;
-            let like = req.query.like as string|number;
-            like =  (Number(like) === 1|| Number(like) === -1) ? Number(like) : 0;
-            const dbResult = await postModel.like(id, userId, like);
-
-            if(dbResult != 1){
-                res.statusCode = 400;
-                throw new Error("Post marked as I didn't like")
+            const dbResult = await postModel.del(id, userId)
+            console.log(dbResult)
+            if(dbResult !== 1){
+                throw new Error("Comment not delete");
             }
-            let messageSuccess =  "";
-            if(like === 1)
-                messageSuccess = "Post marked as I liked"
-            else if(like === -1)
-                messageSuccess = "Post marked as I disliked"
-            else
-                messageSuccess = "Demarcated like or dislike"
-
             res.send({
-                message: messageSuccess
+                message: "Comment deleted"
             })
         }
-        catch(err){
-            res.send({message: err.message})
+        catch (err) {
+            res.status(400).send({ message: err.message })
         }
     }
 } 

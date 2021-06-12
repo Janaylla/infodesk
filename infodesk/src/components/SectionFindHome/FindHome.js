@@ -6,18 +6,19 @@ import CardHome from './CardHome'
 import {useRequestData} from '../../hooks/useRequestData'
 import NewPost from '../../components/NewPost/NewPost'
 const FindHome = () => {
-    const [posts, getPosts] = useRequestData('/post/all', [], 'posts')
+    const [query, setQuery] = useState("");
+    const [posts, getPosts] = useRequestData(`/post/all?${query}`, [], 'posts')
     const [openNewPost, setOpenNewPost] = useState(false);
-    console.log(posts)
+ 
     return (
         <DivSection>
-            <Search/>
+            <Search setQuery={setQuery} query={query}  update={getPosts}/>
             <DivFind>
            <h2>Do you have place to announce?</h2>
            <Button color="orange" onClick={() => setOpenNewPost(true)}>Post It</Button>
 
              <NewPost open={openNewPost} update={getPosts} setOpen={setOpenNewPost}/> 
-
+            
             <Comments>
                 {
                     posts && posts.map((post) =>{
@@ -30,6 +31,8 @@ const FindHome = () => {
                         id={post.Id}
                         userName={post.UserName}
                         date={post.Date}
+                        update={getPosts}
+                        myComment={post.MyComment}
                         />
                     })
                 }

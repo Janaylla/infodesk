@@ -20,7 +20,13 @@ flex-direction: column;
 align-items: center;
   justify-content: flex-start;
   text-align: center;
-
+  cursor:pointer;
+  :hover{
+    img{
+      transform: scale(1.15);
+      transition:0.2s;
+    }
+  }
   h4{
     ${text1}
     font-size: 15px;
@@ -30,5 +36,6 @@ align-items: center;
   img{
     width: 150px;
     height: 150px;
+    ${({selected}) => selected && 'transform: scale(1.15);'}
   }
 `

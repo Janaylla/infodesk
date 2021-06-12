@@ -1,17 +1,20 @@
 import {connection} from '../connection'
 import post from '../types/post'
+import postCommentModel from './PostCommentModel'
 const postModel = {
-    get: async ():Promise<any> => {
+    get: async (where:string, UserId?:string):Promise<any> => {
         try{
             const result =  await connection.raw(`
             SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, 
             r.FirstName, r.LastName, lg.Email, r.UserName,
-            count(liked) as 'like', count(c.Id) as 'comments', p.typeOfAccommodation 
+            count(liked) as 'like', count(c.Id) as 'comments'
+            , p.typeOfAccommodation ${UserId? ",(r.Id="+UserId+" ) as 'MyComment'":''}
             FROM posts AS p
             LEFT JOIN likeposts as l ON l.PostsId = p.Id
             LEFT JOIN registrationdata as r ON r.Id = p.UserId
             LEFT JOIN login as lg ON lg.Id = p.UserId
             LEFT JOIN postslevelcomments1 as c on c.PostId = p.Id  
+            ${where?`WHERE ${where}`: ""}
             group by p.Id
             order by p.Date DESC
             `)
@@ -67,19 +70,23 @@ const postModel = {
             return (err.message || err.sqlMessage)
         }
     },
-    like: async (id:string, id_user:string, like:number):Promise<any> => {
-        
-        try{
-            const result1 = await connection.raw(`
-                DELETE FROM likePosts WHERE UserId = ${id_user} and PostsId = ${id}
-            `)
-            if(like === -1 || like === 1){
-            const result =  await connection.raw(`
-                INSERT INTO likePosts  VALUE (${id}, ${id_user}, ${like === 1})
-            `)
+    del: async (PostId:string, UserId?:string):Promise<any> => {    
+        try{   
+             console.log("oi")
+            await connection.raw(`SELECT Id FROM postslevelcomments1
+            WHERE postId = ${PostId}`)
+            .then(async (res):Promise<void> => {
+                for(let i = 0; i < res[0].length; i++ ){
+                    await postCommentModel.delLevel1(res[0][i].Id as string)
+                }
+            })
+       
+
+            await connection.raw(`DELETE FROM likepost WHERE (postId = ${PostId})`)
+
+            const result = await connection.raw(`DELETE FROM posts WHERE (Id = ${PostId} ${UserId?`and UserId = ${UserId}`:""})` )
+
             return result[0].affectedRows;
-            }
-            return result1[0].affectedRows;
         }
         catch(err){
             return (err.message || err.sqlMessage)

@@ -81,6 +81,7 @@ export const ButtonIcon=styled.div`
   box-shadow: 0px 7px 14px -7px rgba(0,0,0,0.48);
     svg{
         width: 100%;
-        transform: rotate(90deg);
+         ${({showAll}) => showAll ?
+         'transform:rotate(270deg);':'transform: rotate(90deg);'}
     }
 `

@@ -19,6 +19,9 @@ export const goToVideos = (history) => {
 export const goToVideo = (history, video) => {
   history.push(`/videos/${video}`);
 };
+export const goToAccount = (history) => {
+  history.push(`/account`);
+};
 
 export const goToStory = (history) => {
   history.push(`/stories`);

@@ -22,7 +22,7 @@ GET  http://localhost:3003/test HTTP/1.1
 Content-Type: application/xml
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjIyNjg4OTc3LCJleHAiOjE3MDkwODg5Nzd9.shCI1JDrHAxfFMmN78idGWWzCvGxFrTsh3FxQTFkyWc
 ###
-GET  http://localhost:3003/post/all 
+GET  http://localhost:3003/story/all 
 
 
 ###

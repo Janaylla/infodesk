@@ -4,7 +4,7 @@ import userModel from '../model/userModel'
 import VideoCommentModel from '../model/VideoCommentModel'
 import comment from '../types/comment'
 
-const classController = {
+const videosController = {
     createLevel1: async (req: Request, res: Response):Promise<any> => {
         try{
             const token = req.headers.authorization as string;
@@ -236,6 +236,63 @@ const classController = {
         catch(err){
             res.send({message: err.message})
         }
+    },    
+    delLevel1: async (req: Request, res: Response): Promise<any> => {
+        try {
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const id = req.params.id as string;
+            const dbResult = await VideoCommentModel.delLevel1(id, userId)
+            console.log(dbResult)
+            if(dbResult !== 1){
+                throw new Error("Comment not delete");
+            }
+            res.send({
+                message: "Comment deleted"
+            })
+        }
+        catch (err) {
+            res.status(400).send({ message: err.message })
+        }
+    },
+    delLevel2: async (req: Request, res: Response): Promise<any> => {
+        try {
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const id = req.params.id as string;
+            const dbResult = await VideoCommentModel.delLevel2(id, userId)
+            console.log(dbResult)
+            if(dbResult !== 1){
+                throw new Error("Comment not delete");
+            }
+            res.send({
+                message: "Comment deleted"
+            })
+        }
+        catch (err) {
+            res.status(400).send({ message: err.message })
+        }
+    },
+    delLevel3: async (req: Request, res: Response): Promise<any> => {
+        try {
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const id = req.params.id as string;
+            const dbResult = await VideoCommentModel.delLevel3(id, userId)
+            console.log(dbResult)
+            if(dbResult !== 1){
+                throw new Error("Comment not delete");
+            }
+            res.send({
+                message: "Comment deleted"
+            })
+        }
+        catch (err) {
+            res.status(400).send({ message: err.message })
+        }
     }
 } 
-export default classController 
+export default videosController 

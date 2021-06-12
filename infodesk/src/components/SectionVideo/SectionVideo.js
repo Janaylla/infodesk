@@ -11,17 +11,18 @@ import {LikedSaved} from '../../GlobalStyle'
 
 const SectionVideo = () => {
     const { id } = useParams();
+    const [like, setLike] = useState()
+    const [textComment, setTextComment] = useState("")
     const [comments, getComments] = useRequestData(`/video/comment1/${id}`, [], 'comments1')
     const [videoComments, loading, success] = usePostData(`/video/comment1/${id}`)
-
+    const [postLike, loadingLike, successLike] = usePostData(`/video/${id}/like?like=${like}`) 
+ 
     const [video, getVideo] = useRequestData(`/video/${id}`, {}, 'video')
 
     const [favorite, setFavorite] = useState()
     const [postFavorite, loadingFav, successFav] = usePostData(`/video/${id}/favorite?favorite=${favorite}`)
 
 
-    const [like, setLike] = useState()
-    const [textComment, setTextComment] = useState("")
 
     const onClickCancel = () => {
         setTextComment("")
@@ -29,6 +30,15 @@ const SectionVideo = () => {
     const onClickComment = () => {
         videoComments({ text: textComment })
     }
+    useEffect(() => {
+        postLike();
+    }, [like])
+    useEffect(() => {
+        if(!loadingLike && successLike){
+            getVideo()
+        }
+    }, [loadingLike])
+
     useEffect(() => {
         if (!loading && success) {
             getComments()
@@ -46,7 +56,7 @@ const SectionVideo = () => {
             getVideo()
         }
     }, [loadingFav])
-
+    console.log(video)
     return (
         <DivSection>
             {video && video.Url && <>
@@ -88,6 +98,7 @@ const SectionVideo = () => {
                         id={comments.Id}
                         update={getComments}
                         type={"video"}
+                        myComment={comments.MyComment}
                     />
                 })
                 }

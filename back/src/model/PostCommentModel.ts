@@ -41,7 +41,8 @@ const postModel = {
             (SELECT COUNT(*) FROM likepostslevelcomments1 as l
              WHERE l.Comment1Id = c.Id AND l.liked = false) as 'DisLikes'
             ${userId ? `,(select l.liked from likepostslevelcomments1 as l 
-            WHERE l.UserId = `+userId+` and l.Comment1Id = c.Id) as myLike`: ""}
+            WHERE l.UserId = `+userId+` and l.Comment1Id = c.Id) as myLike, 
+            (r.Id = `+userId+`) as 'MyComment'`: ""}
             FROM postslevelcomments1 as c
             LEFT JOIN registrationdata as r ON r.Id = c.UserId
             LEFT JOIN likepostslevelcomments1 as l on  l.UserId = c.UserId 
@@ -65,7 +66,8 @@ const postModel = {
             (SELECT COUNT(*) FROM likepostslevelcomments2 as l
              WHERE l.Comment2Id = c2.Id AND l.liked = false) as 'DisLikes'
              ${userId ? `,(select l.liked from likepostslevelcomments2 as l 
-            WHERE l.UserId = `+userId+` and l.Comment2Id = c2.Id) as myLike`:""}
+            WHERE l.UserId = `+userId+` and l.Comment2Id = c2.Id) as myLike, 
+            (r.Id = `+userId+`) as 'MyComment'`:""}
             FROM postslevelcomments2 as c2
             LEFT JOIN registrationdata as r ON r.Id = c2.UserId
             LEFT JOIN likepostslevelcomments2 as l on  l.UserId = c2.UserId 
@@ -89,7 +91,8 @@ const postModel = {
             (SELECT COUNT(*) FROM likepostslevelcomments3 as l
              WHERE l.Comment3Id = c3.Id AND l.liked = false) as 'DisLikes'
              ${userId ? `,(select l.liked from likepostslevelcomments3 as l 
-            WHERE l.UserId = `+userId+` and l.Comment3Id = c3.Id) as myLike`: ""}
+            WHERE l.UserId = `+userId+` and l.Comment3Id = c3.Id) as myLike, 
+            (r.Id = `+userId+`) as 'MyComment'`: ""}
             FROM postslevelcomments3 as c3
             LEFT JOIN registrationdata as r ON r.Id = c3.UserId
             LEFT JOIN likepostslevelcomments3 as l on  l.UserId = c3.UserId 
@@ -98,6 +101,62 @@ const postModel = {
            order by c3.Date DESC
             `)
             return result[0];
+        }
+        catch(err){
+            return (err.message || err.sqlMessage)
+        }
+    },
+    delLevel1: async (Comment1Id:string, UserId?:string):Promise<any> => {    
+        try{   
+             
+            await connection.raw(`SELECT Id FROM postslevelcomments2
+            WHERE Comment1Id = ${Comment1Id}`)
+            .then(async (res):Promise<void> => {
+                for(let i = 0; i < res[0].length; i++ ){
+                    await postModel.delLevel2(res[0][i].Id as string)
+                }
+            })
+       
+            await connection.raw(`DELETE FROM likepostslevelcomments1 WHERE  (Comment1Id = ${Comment1Id})`)
+
+            const result = await connection.raw(`DELETE FROM postslevelcomments1 WHERE (Id = ${Comment1Id} ${UserId?`and UserId = ${UserId}`:""})` )
+
+            console.log( result)
+        }
+        catch(err){
+            return (err.message || err.sqlMessage)
+        }
+    },
+    delLevel2:  async (Comment2Id:string, UserId?:string):Promise<any> => {    
+        try{   
+             
+            await connection.raw(`SELECT Id FROM postslevelcomments3
+            WHERE Comment2Id = ${Comment2Id}`)
+            .then(async (res):Promise<void> => {
+                for(let i = 0; i < res[0].length; i++ ){
+                    await postModel.delLevel3(res[0][i].Id as string)
+                }
+            })
+       
+
+            console.log("oii") 
+            await connection.raw(`DELETE FROM likepostslevelcomments2 WHERE  (Comment2Id = ${Comment2Id})`)
+
+            const result = await connection.raw(`DELETE FROM postslevelcomments2 WHERE (Id = ${Comment2Id} ${UserId?`and UserId = ${UserId}`:""})` )
+
+            console.log( result)
+        }
+        catch(err){
+            return (err.message || err.sqlMessage)
+        }
+    },
+    delLevel3: async (Comment3Id:string, UserId?:string):Promise<any> => {    
+        try{
+
+            await connection.raw(`DELETE FROM likepostslevelcomments3 WHERE  (Comment3Id = ${Comment3Id})`)
+
+            const result = await connection.raw(`DELETE FROM postslevelcomments3  WHERE (Id = ${Comment3Id} ${UserId?`and UserId = ${UserId}`:""})` )
+            console.log(result)
         }
         catch(err){
             return (err.message || err.sqlMessage)

@@ -16,6 +16,10 @@ Router.put('/comment3/:Comment2Id', Controller.postComment.createLevel3)
 Router.put('/comment1/:id/like', Controller.postComment.likeLevel1)
 Router.put('/comment2/:id/like', Controller.postComment.likeLevel2)
 Router.put('/comment3/:id/like', Controller.postComment.likeLevel3)
-Router.put('/:id', Controller.post.like)
+
+Router.delete('/comment3/:id', Controller.postComment.delLevel3)
+Router.delete('/comment2/:id', Controller.postComment.delLevel2)
+Router.delete('/comment1/:id', Controller.postComment.delLevel1)
+Router.delete('/:id', Controller.post.del)
 
 export {Router as postRouter}

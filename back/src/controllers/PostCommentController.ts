@@ -209,7 +209,6 @@ const classController = {
             const dbResult = Number(userId)?
              await postCommentModel.getLevel2(Comment1Id, userId):
              await postCommentModel.getLevel2(Comment1Id)
-            
             res.send({
                 comments2: dbResult
             })
@@ -228,12 +227,70 @@ const classController = {
              await postCommentModel.getLevel3(Comment2Id, userId):
              await postCommentModel.getLevel3(Comment2Id)
             
+             console.log(dbResult)
             res.send({
                 comments3: dbResult
             })
         }
         catch(err){
             res.send({message: err.message})
+        }
+    },
+    delLevel1: async (req: Request, res: Response): Promise<any> => {
+        try {
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const id = req.params.id as string;
+            const dbResult = await postCommentModel.delLevel1(id, userId)
+            console.log(dbResult)
+            if(dbResult !== 1){
+                throw new Error("Comment not delete");
+            }
+            res.send({
+                message: "Comment deleted"
+            })
+        }
+        catch (err) {
+            res.status(400).send({ message: err.message })
+        }
+    },
+    delLevel2: async (req: Request, res: Response): Promise<any> => {
+        try {
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const id = req.params.id as string;
+            const dbResult = await postCommentModel.delLevel2(id, userId)
+            console.log(dbResult)
+            if(dbResult !== 1){
+                throw new Error("Comment not delete");
+            }
+            res.send({
+                message: "Comment deleted"
+            })
+        }
+        catch (err) {
+            res.status(400).send({ message: err.message })
+        }
+    },
+    delLevel3: async (req: Request, res: Response): Promise<any> => {
+        try {
+            const token = req.headers.authorization as string;
+            const userId = await userModel.getIdToken(token)
+
+            const id = req.params.id as string;
+            const dbResult = await postCommentModel.delLevel3(id, userId)
+            console.log(dbResult)
+            if(dbResult !== 1){
+                throw new Error("Comment not delete");
+            }
+            res.send({
+                message: "Comment deleted"
+            })
+        }
+        catch (err) {
+            res.status(400).send({ message: err.message })
         }
     }
 } 
