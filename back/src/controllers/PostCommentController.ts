@@ -11,6 +11,9 @@ const classController = {
             const userId = await userModel.getIdToken(token)
             let {text, date}:comment = req.body;
             const currentDate = new Date();
+            if(!text || typeof(text)!= "string"){
+                throw new Error("Comment not inserted")
+            }
             
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
           
@@ -26,7 +29,7 @@ const classController = {
             })
         }
         catch(err){
-            res.send({message: err.message})
+            res.status(400).send({message: err.message})
         }
     },
     createLevel2: async (req: Request, res: Response):Promise<any> => {
@@ -36,6 +39,9 @@ const classController = {
             let {text, date}:comment = req.body;
             const currentDate = new Date();
             
+            if(!text || typeof(text)!= "string"){
+                throw new Error("Comment not inserted")
+            }
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
           
             const dbResult = await postCommentModel.create({userId, text, date}, "postslevelcomments2", "Comment1Id", req.params.Comment1Id as string);
@@ -50,7 +56,7 @@ const classController = {
             })
         }
         catch(err){
-            res.send({message: err.message})
+            res.status(400).send({message: err.message})
         }
     },
     createLevel3: async (req: Request, res: Response):Promise<any> => {
@@ -60,6 +66,9 @@ const classController = {
             let {text, date}:comment = req.body;
             const currentDate = new Date();
             
+            if(!text || typeof(text)!= "string"){
+                throw new Error("Comment not inserted")
+            }
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
           
             const dbResult = await postCommentModel.create({userId, text, date}, "postslevelcomments3", "Comment2Id", req.params.Comment2Id as string);
@@ -74,7 +83,7 @@ const classController = {
             })
         }
         catch(err){
-            res.send({message: err.message})
+            res.status(400).send({message: err.message})
         }
     },
     likeLevel1: async (req: Request, res: Response):Promise<any> => {

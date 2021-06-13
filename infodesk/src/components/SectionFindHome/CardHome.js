@@ -7,9 +7,9 @@ import { useRequestData } from '../../hooks/useRequestData'
 import { usePostData } from '../../hooks/usePostData'
 import { useDelDate } from '../../hooks/useDelDate'
 import {KeyboardArrowDown, KeyboardArrowUp, MoreHoriz} from '@material-ui/icons'
-const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id , date, myComment, update}) => {
+const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id , date, myComment, update, address}) => {
     const [comments, getComments] = useRequestData(`/post/comment1/${id}`, [], 'comments1')
-    const [postComments, loading, success] = usePostData(`/post/comment1/${id}`)
+    const [postComments, snack, loading, success] = usePostData(`/post/comment1/${id}`)
 
     const [showComments, setShowComments] = useState(false)
     
@@ -58,6 +58,8 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
                             <div>
                                 <h3>{typeAccommodation}</h3>
                                 <h3>{price} €</h3>
+                                <h3>{address}</h3>
+                                
                             </div>
                             <div>
                                 <p>

@@ -57,7 +57,7 @@ p{
             flex-grow: 1;
             >div{
                 display: flex;
-                h3:last-of-type{
+                h3:nth-of-type(n+2){
                     margin-left: 20px;
                 }
                 margin-bottom: ${marginValue};
@@ -65,7 +65,7 @@ p{
             margin-bottom: ${marginValue};
         }
         .contact{
-            width: 200px;
+            width: 300px;
             >div:first-of-type{
                 margin-bottom: ${marginValue};
             }

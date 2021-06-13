@@ -4,10 +4,13 @@ import Comment from '../../PostComment/PostComment'
 import CardComment from '../../Comment/CardCommentLevel1'
 import { useRequestData } from '../../../hooks/useRequestData'
 import { usePostData } from '../../../hooks/usePostData'
+import { KeyboardArrowDown, KeyboardArrowUp, MoreHoriz } from '@material-ui/icons'
+import { LikedSaved, ArrowDown } from '../../../GlobalStyle'
 
-const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id , date}) => {
+const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id, date, address }) => {
     const [comments, getComments] = useRequestData(`/post/comment1/${id}`, [], 'comments1')
-    const [postComments, loading, success] = usePostData(`/post/comment1/${id}`)
+    const [postComments, snack, loading, success] = usePostData(`/post/comment1/${id}`)
+    const [showComments, setShowComments] = useState(false)
 
 
     const [textComment, setTextComment] = useState("")
@@ -25,27 +28,28 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
         }
     }, [loading])
     useEffect(() => {
-            getComments()
+        getComments()
     }, [id])
     return (
         <>
             <DivCardHome>
                 <div className="mainAvatar">
                     <div className="avatar">
-                    
+
                     </div>
                 </div>
 
                 <div className="contentPost">
                     <div className="userName">
-                        <p>{userName}</p> 
-                        <p>{date}</p> 
+                        <p>{userName}</p>
+                        <p>{date}</p>
                     </div>
                     <div className="contentText">
                         <div className="text">
                             <div>
                                 <h3>{typeAccommodation}</h3>
                                 <h3>{price} €</h3>
+                                <h3>{address}</h3>
                             </div>
                             <div>
                                 <p>
@@ -72,9 +76,15 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
                 onChange={(e) => setTextComment(e.target.value)}
                 value={textComment}
             />
-
+        {
+                comments.length > 0 && (
+                    showComments ?
+                        <ArrowDown onClick={() => setShowComments(false)}><KeyboardArrowUp />Hide comments</ArrowDown> :
+                        <ArrowDown onClick={() => setShowComments(true)}><KeyboardArrowDown />Show comments</ArrowDown>
+                )
+            }
             <DivHomeComments>
-                {comments.map((comments) => {
+                {showComments && comments.map((comments) => {
                     return <CardComment
                         name={comments.UserName}
                         text={comments.Text}

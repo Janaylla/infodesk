@@ -5,7 +5,7 @@ import CardComment from '../Comment/CardCommentLevel1'
 import { useRequestData } from '../../hooks/useRequestData'
 import { usePostData } from '../../hooks/usePostData'
 import { LikedSaved, ArrowDown } from '../../GlobalStyle'
-import { ThumbDownOutlined, ThumbUpAltOutlined, ThumbDown, ThumbUp, BookmarkBorder, Bookmark, FiberPin } from '@material-ui/icons'
+import { ThumbDownOutlined, ThumbUpAltOutlined, ThumbDown, ThumbUp } from '@material-ui/icons'
 import { KeyboardArrowDown, KeyboardArrowUp, MoreHoriz } from '@material-ui/icons'
 import { useDelDate } from '../../hooks/useDelDate'
 
@@ -13,9 +13,9 @@ const FindHome = ({ id, title, userName, date, text, topic, disLikes, likes, myL
 
     const [query, setQuery] = useState("");
     const [comments, getComments] = useRequestData(`/story/comment1/${id}`, [], 'comments1')
-    const [storyComments, loadingComment, successComment] = usePostData(`/story/comment1/${id}`)
+    const [storyComments, snackComment, loadingComment, successComment] = usePostData(`/story/comment1/${id}`)
     const [like, setLike] = useState(myLike)
-    const [postLike, loadingLike, successLike] = usePostData(`/story/${id}/like?like=${like}`)
+    const [postLike, snackLike, loadingLike, successLike] = usePostData(`/story/${id}/like?like=${like}`)
     const [textComment, setTextComment] = useState("")
     const [showButtonDelete, setShowButtonDelete] = useState(false)
     const [dataDel, loadingDel, successDel] = useDelDate(`/story`)

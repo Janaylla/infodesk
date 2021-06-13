@@ -6,23 +6,22 @@ export const useRequestData = (path, initialState, keyObject) => {
   const [data, setData] = useState(initialState);
   const token = localStorage.getItem("token");
   const getData = () => {
-    console.log("poo")
-      axios
-        .get(`${BASE_URL}${path}`, {
-          headers: {
-            authorization: token,
-          },
-        })
-        .then((response) => {
-          if(keyObject)
-            setData(response.data[keyObject]);
-          else{
-            setData(response.data);
-          }
-        })
-        .catch((err) => {
-          console.log(err.message)
-        });
+    axios
+      .get(`${BASE_URL}${path}`, {
+        headers: {
+          authorization: token,
+        },
+      })
+      .then((response) => {
+        if (keyObject)
+          response.data[keyObject] ? setData(response.data[keyObject]) : setData(initialState);
+        else {
+          setData(response.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err.message)
+      });
   };
 
   useEffect(() => {

@@ -4,10 +4,8 @@ import CardHome from './CardHome'
 import {useRequestData} from '../../../hooks/useRequestData'
 const FindHome = () => {
     const [posts, getPosts] = useRequestData('/post/my', [], 'posts')
-    console.log(posts)
     return (
         <DivSection>
-            <Comments>
                 {
                     posts && posts.map((post) =>{
                         return <CardHome
@@ -19,11 +17,11 @@ const FindHome = () => {
                         id={post.Id}
                         userName={post.UserName}
                         date={post.Date}
+                        address={post.Address}
                         />
                     })
                 }
                
-            </Comments>
         </DivSection>
     )
 };

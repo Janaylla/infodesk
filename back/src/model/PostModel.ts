@@ -5,12 +5,10 @@ const postModel = {
     get: async (where:string, UserId?:string):Promise<any> => {
         try{
             const result =  await connection.raw(`
-            SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, 
-            r.FirstName, r.LastName, lg.Email, r.UserName,
-            count(liked) as 'like', count(c.Id) as 'comments'
+            SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, p.Address,
+            r.FirstName, r.LastName, lg.Email, r.UserName, count(c.Id) as 'comments'
             , p.typeOfAccommodation ${UserId? ",(r.Id="+UserId+" ) as 'MyComment'":''}
             FROM posts AS p
-            LEFT JOIN likeposts as l ON l.PostsId = p.Id
             LEFT JOIN registrationdata as r ON r.Id = p.UserId
             LEFT JOIN login as lg ON lg.Id = p.UserId
             LEFT JOIN postslevelcomments1 as c on c.PostId = p.Id  
@@ -41,9 +39,9 @@ const postModel = {
             const result =  await connection.raw(`
             SELECT p.Id, p.Date, p.Price, p.Text, p.UserId, 
             r.FirstName, r.LastName, lg.Email, r.UserName,
-            count(liked) as 'like', count(c.Id) as 'comments', p.typeOfAccommodation 
+             count(c.Id) as 'comments', p.typeOfAccommodation ,
+             p.Address
             FROM posts AS p
-            LEFT JOIN likeposts as l ON l.PostsId = p.Id
             LEFT JOIN registrationdata as r ON r.Id = p.UserId
             LEFT JOIN login as lg ON lg.Id = p.UserId
             LEFT JOIN postslevelcomments1 as c on c.PostId = p.Id  
@@ -57,12 +55,12 @@ const postModel = {
             return (err.message || err.sqlMessage)
         }
     },
-    create: async ({userId, description, date, price, accommodation}:post):Promise<any> => {
+    create: async ({userId, description, date, price, accommodation, address}:post):Promise<any> => {
         
         try{
             const result =  await connection.raw(`
-                INSERT INTO posts (UserId, Text, Date, Price, typeOfAccommodation)
-                VALUES ('${userId}', '${description}', '${date}', ${price}, '${accommodation}');
+                INSERT INTO posts (UserId, Text, Date, Price, typeOfAccommodation, Address)
+                VALUES ('${userId}', '${description}', '${date}', ${price}, '${accommodation}', '${address}');
             `)
             return result[0].affectedRows;
         }

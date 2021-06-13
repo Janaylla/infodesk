@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Form} from '../../GlobalStyle'
 import {DialogForm, DivAbsolute} from './styled'
 import {useForm} from '../../hooks/useForm'
@@ -8,7 +8,7 @@ import { CloseOutlined } from '@material-ui/icons'
 import { usePostData } from '../../hooks/usePostData'
 
 function SimpleDialog({onClose, open, update, topics}) {
-  const [storyData, loading, success]= usePostData('/story/create')
+  const [storyData, snack, loading, success]= usePostData('/story/create')
 
   const formInitial = {
     title: "",
@@ -16,7 +16,7 @@ function SimpleDialog({onClose, open, update, topics}) {
     text: ""
   }
 useEffect(() => {
-  if(!loading && success){
+  if(!loading && success === 1){
       update();
       resetForm(formInitial);
       onClose();
@@ -27,7 +27,6 @@ const [form, onChange, resetForm] = useForm(formInitial)
   
   const newStory = (e) =>{
     e.preventDefault();
-    
     storyData(form)
   }
   return (

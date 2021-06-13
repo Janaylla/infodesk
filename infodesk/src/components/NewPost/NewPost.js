@@ -6,9 +6,9 @@ import Button from '../../components/Button/Button'
 import { IconButton } from '@material-ui/core'
 import { CloseOutlined } from '@material-ui/icons'
 import { usePostData } from '../../hooks/usePostData'
-
+import {maskMoney} from '../../constants/maskMoney'
 function SimpleDialog({onClose, open, update}) {
-  const [postData, loading, success]= usePostData('/post/create')
+  const [postData, snack, loading, success]= usePostData('/post/create')
 
   const formInitial = {
     text: "",
@@ -16,7 +16,7 @@ function SimpleDialog({onClose, open, update}) {
     price: ""
   }
 useEffect(() => {
-  if(!loading && success){
+  if(!loading && success === 1){
       update();
       resetForm(formInitial);
       onClose();
@@ -31,6 +31,7 @@ const [form, onChange, resetForm] = useForm(formInitial)
   }
   return (
     <DialogForm onClose={onClose} aria-labelledby="simple-dialog-title" open={open}>
+        {snack}
         <DivAbsolute>
       <IconButton onClick={onClose}>
         <CloseOutlined />
@@ -48,11 +49,11 @@ const [form, onChange, resetForm] = useForm(formInitial)
       </label>
       <label>
         <h3>Price</h3>
-        <input name="price" value={form['price']} onChange={onChange}/>
+        <input name="price" value={form['price']} onChange={(e) => onChange(e, maskMoney)}/>
       </label>
       <label>
         <h3>Place(City, neighbourhood)</h3>
-        <input name="place" value={form['place']} onChange={onChange} />
+        <input name="address" value={form['address']} onChange={onChange} />
       </label>
 
       <label>

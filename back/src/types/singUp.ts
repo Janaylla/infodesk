@@ -4,7 +4,8 @@ type singUp = {
     userName: string,
     firstName: string,
     lastName: string,
-    password?: string
+    password?: string,
+    address: string
 }
 
 

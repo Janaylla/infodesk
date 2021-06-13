@@ -81,6 +81,7 @@ const videoModel = {
             join favoritevideo as f ON f.VideoId = v.Id
             WHERE f.UserId = ${userId}
             `)
+            console.log(result)
             return result[0];
         }
         catch (err) {

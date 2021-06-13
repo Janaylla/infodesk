@@ -79,11 +79,13 @@ const classController = {
         try{
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
+            console.log("result")
             if(!userId){
                 req.statusCode = 400;
                 throw new Error(`User Invalid`)
             }
 
+            console.log("result")
             const dbResult = await VideoModel.getByFavoriteUser(userId);
           
             res.send({
