@@ -33,6 +33,7 @@ const FindHome = () => {
                         date={post.Date}
                         update={getPosts}
                         myComment={post.MyComment}
+                        address={post.Address}
                         />
                     })
                 }

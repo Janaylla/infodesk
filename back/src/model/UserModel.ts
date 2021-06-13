@@ -48,33 +48,35 @@ const userModel = {
             return (err.message || err.sqlMessage)
         }
     },
-    getById: async(id:string):Promise<any> =>{
-        try{
+    getById: async (id: string): Promise<any> => {
+        try {
             const result = await connection.raw(`
                 SELECT * FROM registrationdata WHERE id = ${id};
             `)
-            if(!result[0].length){
+            if (!result[0].length) {
                 throw new Error("User not found")
             }
             return result[0][0]
         }
-        catch(err){
+        catch (err) {
             return (err.message || err.sqlMessage)
         }
     },
-    create: async ({ email, firstName, lastName, password, userName }: singUp): Promise<any> => {
+    create: async ({ email, firstName, lastName, password, userName, address }: singUp): Promise<any> => {
         try {
+            console.log("result1")
             const result1 = await connection.raw(`
-            INSERT INTO registrationdata (FirstName, LastName, Email, UserName) 
-            VALUES ('${firstName}', '${lastName} ', '${email}', '${userName}');
+            INSERT INTO registrationdata (FirstName, LastName, Email, UserName, Address) 
+            VALUES ('${firstName}', '${lastName} ', '${email}', '${userName}', '${address}');
             `)
+            console.log(result1)
             if (!result1[0].affectedRows)
                 return ("Email or username already exists")
 
             const result2 = await connection.raw(`
-            SELECT * FROM registrationdata where email = '${email}'`)
+                SELECT * FROM registrationdata where email = '${email}'`)
 
-                console.log(result2)
+            console.log(result2)
             const result3 = await connection.raw(`
                 INSERT INTO login (Email, Password, Id) VALUES 
                 ('${email}', '${password}', ${result2[0][0].Id});
@@ -84,6 +86,33 @@ const userModel = {
         }
         catch (err) {
             return (err.message || err.sqlMessage)
+        }
+    },
+    edit: async ({ email, firstName, lastName, password, userName, address, id }: singUp, oldPassword: string): Promise<any> => {
+        try {
+            console.log("result1")
+            
+            const result2 = await connection.raw(`
+            UPDATE login SET Email = 
+            '${email}', Password = '${password}' 
+            WHERE (Id = ${id} and Password = '${oldPassword}');
+            `)
+            if(result2[0].affectedRows != 1){
+                return false
+            }
+            const result1 = await connection.raw(`
+            UPDATE registrationdata SET 
+            FirstName = '${firstName}',   
+            LastName = '${lastName}',
+            Email = '${email}', 
+            UserName = '${userName}',
+            Address = '${address}'
+             WHERE (Id = ${id});
+            `)
+            return (result1[0].affectedRows === 1 && result2[0].affectedRows === 1);
+        }
+        catch (err) {
+            return false
         }
     }
 }

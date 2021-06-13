@@ -6,6 +6,7 @@ export const DivInputComments = styled.div`
 display: flex;
 align-items: center;
 justify-content: space-between;
+width: 100%;
 input{
     ${text3}
     font-size: 15px;

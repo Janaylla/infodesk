@@ -30,15 +30,19 @@ const classController = {
             where = where.replace('#', "(");
             where = where.replace('#', ")");
              where += where ?
-             (date && !noData ? `and s.Date='${date}'`: ''):
-             (date && !noData? `s.Date = '${date}'`: '')
+             (date && !noData ? `and  (DATE_FORMAT(s.Date,'%Y-%m-%d') 
+             LIKE '${date}')`: ''):
+             (date && !noData? ` (DATE_FORMAT(s.Date,'%Y-%m-%d') 
+             LIKE '${date}')`: '')
 
             let orderBy = (order ===  'liked') ? 'Likes DESC':(
             (order ===  'disLiked') ? 'Likes ASC':'');
             console.log(req.query)
-            console.log(orderBy)
             const dbResult = Number(UserId) ? await StoryModel.get(where, orderBy, UserId):
             await StoryModel.get(where, orderBy)
+
+            console.log(dbResult)
+
             res.send({
                 stories: dbResult
             })
@@ -67,13 +71,22 @@ const classController = {
             let {date,title,text, topic}:story = req.body;
             const currentDate = new Date();
             
+            if(!title || typeof(title) != "string"){
+                throw new Error("Title invalid")
+            }
+            if(!topic || typeof(topic) != "string"){
+                throw new Error("Topic invalid")
+            }
+            if(!text || typeof(text) != "string"){
+                throw new Error("Text invalid")
+            }
+
+
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
           
             const dbResult = await StoryModel.create({userId, date, title, text, topic});
             console.log(dbResult)
-            console.log("Checguei")
             if(dbResult != 1){
-                res.statusCode = 400;
                 throw new Error("Story not inserted")
             }
             res.send({
@@ -81,7 +94,7 @@ const classController = {
             })
         }
         catch(err){
-            res.send({message: err.message})
+            res.status(400).send({message: err.message})
         }
     },
     like: async (req: Request, res: Response):Promise<any> => {

@@ -8,17 +8,21 @@ import {goToHome} from '../Routes/Coordinators'
 export const usePostData = (path) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(0);
+  const [snack, setSnack] = useState();
+  
   const token = localStorage.getItem("token");
+
   const postData = (body) => {
         setSuccess(0)
         setLoading(true)
+        setSnack()
       axios
         .put(`${BASE_URL}${path}`, body, {
           headers: {
             authorization: token,
           },
         })
-        .then((response) => {
+        .then(() => {
             setSuccess(1)
             setLoading(false)
         })
@@ -26,11 +30,12 @@ export const usePostData = (path) => {
           console.log(err)
           setSuccess(-1)
           setLoading(false)
+          setSnack(<Snackbar text={"Check the data and try again"}/>)
         });
   };
 
 
-  return [postData, loading, success];
+  return [postData, snack, loading, success];
 };
 export const useLogin = () =>{
   const [loading, setLoading] = useState(false);
@@ -84,10 +89,38 @@ export const useSingUp = () =>{
             }, 300)
         })
         .catch((err) => {
-          console.log(err.message)
           setSuccess(-1)
           setLoading(false)
-          setSnack(<Snackbar text={err.message} />)
+          setSnack(<Snackbar text={"Check your data and try again"} />)
+        });
+  }   
+  return [login, snack, loading, success];
+}
+
+export const useEditProfile = () =>{
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(0);
+  const [snack, setSnack] = useState();
+  const token = localStorage.getItem("token");
+
+  const login = (body) => {
+        setSuccess(0)
+        setLoading(true)
+        setSnack()
+      axios
+        .put(`${BASE_URL}${'/profile'}`, body, {
+          headers: {
+            authorization: token,
+          },
+        })
+        .then(() => {
+            setSuccess(1)
+            setLoading(false)
+        })
+        .catch((err) => {
+          setSuccess(-1)
+          setLoading(false)
+          setSnack(<Snackbar text={"Check your data and try again"} />)
         });
   }   
   return [login, snack, loading, success];

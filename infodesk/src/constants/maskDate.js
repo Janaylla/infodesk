@@ -1,18 +1,7 @@
 export default function maskDate(dt) {
   const date = new Date(dt);
   const nameMonth = [
-    "janeiro",
-    "fevereiro",
-    "março",
-    "abril",
-    "maio",
-    "junho",
-    "julho",
-    "agosto",
-    "setembro",
-    "outubro",
-    "novembro",
-    "dezembro",
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
   ];
   let stringDate =
     date.getDate() < 10 ? `0${date.getDate()}` : `${date.getDate()}`;

@@ -7,7 +7,7 @@ import { useDelDate } from '../../hooks/useDelDate'
 
 const CardComment = ({ text, name, likes, myLike, id, update, type, myComment }) => {
     const [like, setLike] = useState(myLike)
-    const [postLike, loadingLike, successLike] = usePostData(`/${type}/comment3/${id}/like?like=${like}`)
+    const [postLike, snackLike, loadingLike, successLike] = usePostData(`/${type}/comment3/${id}/like?like=${like}`)
     const [showButtonDelete, setShowButtonDelete] = useState(false)
      const [dataDel, loadingDel, successDel] = useDelDate(`/${type}/comment3`)
     const onClickLike = (lk) => {

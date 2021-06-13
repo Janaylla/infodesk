@@ -1,9 +1,10 @@
 import {Request, Response} from 'express'
+import { isNumber } from 'util'
 import postModel from '../model/PostModel'
 import userModel from '../model/userModel'
 import post from '../types/post'
 
-const classController = {
+const postController = {
     get: async (req: Request, res: Response):Promise<any> => {
         try{
             const {room, studio, apartment, date, noData} = req.query;
@@ -22,16 +23,17 @@ const classController = {
              (date && !noData ? `and p.Date='${date}'`: ''):
              (date && !noData? `p.Date = '${date}'`: '')
              
-            const dbResult:[] = await postModel.get(where);
-
+            const dbResult:[] = userId ? await postModel.get(where):
+            await postModel.get(where, userId)
+            
            
-            console.log(where)
+            console.log(dbResult)
             res.send({
                 posts: dbResult
             })
         }
         catch(err){
-            res.send({message: err.message})
+            res.status(400).send({message: err.message})
         }
     },
     getById: async (req: Request, res: Response):Promise<any> => {
@@ -56,25 +58,41 @@ const classController = {
                 throw new Error("Token invalid")
             }
             const dbResult = await postModel.getByUserId(userId);
+            console.log(dbResult)
             res.send({
                 posts: dbResult
             })
         }
         catch(err){
-            res.send({message: err.message})
+            res.status(400).send({message: err.message})
         }
     },
     create: async (req: Request, res: Response):Promise<any> => {
         try{
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
-            let {description, date, price, accommodation}:post = req.body;
+            let {description, date, price, accommodation, address}:post = req.body;
             const currentDate = new Date();
-            
+            if(!description || typeof(description) != "string"){
+                throw new Error("Description invalid")
+            }
+            if(!accommodation || typeof(accommodation) != "string"){
+                throw new Error("Accommodation invalid")
+            }
+            if(typeof(price) != "string"){
+                throw new Error("Price invalid")
+            }
+            price = price.replace(',', '.')
+            if(!Number(price) || Number(price) <= 0){
+                throw new Error("Price invalid")
+            }
+            if(!address || typeof(address) != "string"){
+                throw new Error("Address invalid")
+            }
             date = date || `${currentDate.toLocaleString("fr-CA").slice(0, 10)} ${currentDate.toTimeString().slice(0, 8)}`
-        
+           
 
-            const dbResult = await postModel.create({userId, description, date, price, accommodation});
+            const dbResult = await postModel.create({ address, userId, description, date, price, accommodation});
             console.log(dbResult)
             if(dbResult != 1){
                 res.statusCode = 400;
@@ -85,7 +103,7 @@ const classController = {
             })
         }
         catch(err){
-            res.send({message: err.message})
+            res.status(400).send({message: err.message})
         }
     },
     del: async (req: Request, res: Response): Promise<any> => {
@@ -108,4 +126,4 @@ const classController = {
         }
     }
 } 
-export default classController 
+export default postController 

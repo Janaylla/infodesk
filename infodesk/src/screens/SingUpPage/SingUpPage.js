@@ -14,7 +14,8 @@ const SingUpPage = () => {
     password:"", 
     userName:"", 
     lastName:"", 
-    firstName:""
+    firstName:"",
+    address: ""
   }
   const [postLogin, snack] = useSingUp(initialForm)
   const formInitial = {
@@ -27,9 +28,6 @@ const SingUpPage = () => {
   const login = (e) => {
     e.preventDefault();
     postLogin(form)
-  }
-  const sing = () => {
-    
   }
   const onClickPasswordVisibility = () => {
     setPasswordVisibility(!passwordVisibility)
@@ -52,13 +50,16 @@ const SingUpPage = () => {
         <input name="lastName" value={form['lastName']} onChange={onChange} />
       </label>
       <label>
+        <h3>Address</h3>
+        <input name="address" value={form['address']} onChange={onChange} />
+      </label>
+      <label>
         <h3>User Name</h3>
         <input name="userName" value={form['userName']} onChange={onChange} />
       </label>
       <label>
         <h3>Email</h3>
-        <input name="email" value={form['email']} onChange={onChange} />
-        
+        <input name="email" value={form['email']} type="email" onChange={onChange} />
       </label>
       <label>
         <h3>Make a password</h3>

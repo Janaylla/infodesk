@@ -8,11 +8,11 @@ import CardComment2 from './CardCommentLevel2'
 import { KeyboardArrowDown, KeyboardArrowUp, MoreHoriz } from '@material-ui/icons'
 import { useDelDate } from '../../hooks/useDelDate'
 
-const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type, 
+const CardComment = ({ text, name, likes, myLike, id, update, type, 
     myComment }) => {
     const [like, setLike] = useState(myLike)
-    const [postLike, loadingLike, successLike] = usePostData(`/${type}/comment1/${id}/like?like=${like}`)
-    const [postComments, loadingComment, successComment] = usePostData(`/${type}/comment2/${id}`)
+    const [postLike, snackLike, loadingLike, successLike] = usePostData(`/${type}/comment1/${id}/like?like=${like}`)
+    const [postComments, snackComment, loadingComment, successComment] = usePostData(`/${type}/comment2/${id}`)
     const [comments, getComments2] = useRequestData(`/${type}/comment2/${id}`, [], 'comments2')
 
     const [commenting, setCommenting] = useState(false)
@@ -35,7 +35,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type,
     }, [like])
 
     useEffect(() => {
-        if (!loadingComment && successComment) {
+        if (!loadingComment && successComment === 1) {
             getComments2();
             setTextComment("");
             setCommenting(false)
@@ -48,7 +48,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type,
         }
     }, [loadingDel])
     useEffect(() => {
-        if (!loadingLike && successLike)
+        if (!loadingLike && successLike === 1)
             update()
     }, [loadingLike])
     useEffect(() => {
@@ -56,7 +56,6 @@ const CardComment = ({ text, name, likes, myLike, id, update, disLikes, type,
     }, [id])
     return (
         <DivCardComment>
-
             <div className="avatar">
             </div>
             <div className="text">

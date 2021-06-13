@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-import { Nav } from '../../../GlobalStyle'
-import { colorBlueDark, marginValue, text2, text3, marginValue2, text1 } from '../../../GlobalStyle'
+import { colorBlueDark, marginValue, text2, text3, marginValue2 } from '../../../GlobalStyle'
 export const DivSection = styled.section`
     background-color: ${colorBlueDark};
     display: flex;
+    flex-direction: column;
     padding: ${marginValue2};
     justify-content: space-between;
     align-items: flex-start;
@@ -12,7 +12,7 @@ export const Comments = styled.div`
 
 `
 export const DivCardHome = styled.div`
-
+width: 100%;
 display: flex;
 h3{
     ${text3}
@@ -57,7 +57,7 @@ p{
             flex-grow: 1;
             >div{
                 display: flex;
-                h3:last-of-type{
+                h3:nth-of-type(n+2){
                     margin-left: 20px;
                 }
                 margin-bottom: ${marginValue};
@@ -65,7 +65,7 @@ p{
             margin-bottom: ${marginValue};
         }
         .contact{
-            width: 200px;
+            width: 350px;
             >div:first-of-type{
                 margin-bottom: ${marginValue};
             }
@@ -79,9 +79,11 @@ p{
 `
 
 export const DivHomeComments = styled.div`
+    width: 100%;
 
 `
 export const DivInputComments = styled.div`
+width: 100%;
 display: flex;
 align-items: center;
 input{

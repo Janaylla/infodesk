@@ -14,13 +14,13 @@ const SectionVideo = () => {
     const [like, setLike] = useState()
     const [textComment, setTextComment] = useState("")
     const [comments, getComments] = useRequestData(`/video/comment1/${id}`, [], 'comments1')
-    const [videoComments, loading, success] = usePostData(`/video/comment1/${id}`)
-    const [postLike, loadingLike, successLike] = usePostData(`/video/${id}/like?like=${like}`) 
+    const [videoComments, snackComment, loading, success] = usePostData(`/video/comment1/${id}`)
+    const [postLike,snackLike,  loadingLike, successLike] = usePostData(`/video/${id}/like?like=${like}`) 
  
     const [video, getVideo] = useRequestData(`/video/${id}`, {}, 'video')
 
     const [favorite, setFavorite] = useState()
-    const [postFavorite, loadingFav, successFav] = usePostData(`/video/${id}/favorite?favorite=${favorite}`)
+    const [postFavorite, snackFavorite, loadingFav, successFav] = usePostData(`/video/${id}/favorite?favorite=${favorite}`)
 
 
 
@@ -59,6 +59,7 @@ const SectionVideo = () => {
     console.log(video)
     return (
         <DivSection>
+            {snackComment || snackFavorite || snackLike}
             {video && video.Url && <>
                 <video src={`/videos/${video.Url}`} controls autoplay></video>
                 <LikedSaved>

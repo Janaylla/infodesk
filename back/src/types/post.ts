@@ -4,7 +4,8 @@ type post = {
     description: string,
     date: Date|undefined|string,
     price: string,
-    accommodation: string
+    accommodation: string,
+    address: string
 }
 
 export type posts = Array<post>;

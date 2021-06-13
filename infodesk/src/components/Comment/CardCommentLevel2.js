@@ -10,8 +10,8 @@ import { useDelDate } from '../../hooks/useDelDate'
 
 const CardComment = ({ text, name, likes, myLike, id, update, myComment, type }) => {
     const [like, setLike] = useState(myLike)
-    const [postLike, loadingLike, successLike] = usePostData(`/${type}/comment2/${id}/like?like=${like}`)
-    const [postComments, loadingComment, successComment] = usePostData(`/${type}/comment3/${id}`)
+    const [postLike, snackLike, loadingLike, successLike] = usePostData(`/${type}/comment2/${id}/like?like=${like}`)
+    const [postComments, snackComment, loadingComment, successComment] = usePostData(`/${type}/comment3/${id}`)
     const [comments, getComments3] = useRequestData(`/${type}/comment3/${id}`, [], 'comments3')
    
     const [showComments, setShowComments] = useState(false)
@@ -35,7 +35,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, myComment, type })
     }, [like])
 
     useEffect(() =>{
-        if(!loadingComment && successComment){
+        if(!loadingComment && successComment === 1){
             getComments3()
         }
     }, [loadingComment])
@@ -45,7 +45,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, myComment, type })
     }, [id])
 
       useEffect(() =>{
-        if(!loadingLike && successLike)
+        if(!loadingLike && successLike === 1)
             update()
     }, [loadingLike])
     
