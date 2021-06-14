@@ -7,9 +7,11 @@ import { useRequestData } from '../../hooks/useRequestData'
 import { usePostData } from '../../hooks/usePostData'
 import { useDelDate } from '../../hooks/useDelDate'
 import {KeyboardArrowDown, KeyboardArrowUp, MoreHoriz} from '@material-ui/icons'
+import maskDate from '../../constants/maskDate'
+
 const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id , date, myComment, update, address}) => {
     const [comments, getComments] = useRequestData(`/post/comment1/${id}`, [], 'comments1')
-    const [postComments, snack, loading, success] = usePostData(`/post/comment1/${id}`)
+    const [postComments, snack, loading, success, notLoggedInPost] = usePostData(`/post/comment1/${id}`)
 
     const [showComments, setShowComments] = useState(false)
     
@@ -42,6 +44,7 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
     return (
         <>
             <DivCardHome>
+                {notLoggedInPost}
                 <div className="mainAvatar">
                     <div className="avatar">
                     
@@ -51,7 +54,7 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
                 <div className="contentPost">
                     <div className="userName">
                         <p>{userName}</p> 
-                        <p>{date}</p> 
+                        <p>{maskDate(date)}</p> 
                     </div>
                     <div className="contentText">
                         <div className="text">
@@ -111,6 +114,7 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id 
                         update={getComments}
                         type={"post"}
                         myComment={comments.MyComment}
+                        date={comments.Date}
                     />
                 })}
             </DivHomeComments>

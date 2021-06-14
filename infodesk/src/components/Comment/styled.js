@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import { Nav } from '../../GlobalStyle'
-import { colorBlueDark, colorGrey, marginValue, text2, text3, marginValue2, text1, ArrowDown } from '../../GlobalStyle'
+import {  colorGrey, text3,  text1, ArrowDown } from '../../GlobalStyle'
 
 export const DivCardComment = styled.div`
     display: flex;
@@ -65,9 +64,12 @@ export const ShowCommentsSmall= styled(ArrowDown)`
 `
 export const Title = styled.div`
     display: flex;
-    justify-content: space-between;
        
     position: relative;
+    align-items: center;
+    h3{
+        margin-right: 10px;
+    }
         *{
             color:white;
         }
@@ -82,11 +84,11 @@ export const Title = styled.div`
             padding: 5px 10px;
             cursor: pointer;
             position: absolute;
-            right: 0px;
-            top: 28px;
+            top: 20px;
         }
         svg{
             cursor: pointer;
+            width: 20px;
             :hover{
                 opacity: 0.6;
             }

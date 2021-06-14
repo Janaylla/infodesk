@@ -4,20 +4,26 @@ import { BASE_URL } from "../constants/urls";
 import Snackbar from '../components/Snackbar/Snackbar'
 import {useHistory} from 'react-router-dom'
 import {goToHome} from '../Routes/Coordinators'
+import NotLoggedIn from '../components/NotLoggedIn/NotLoggedIn'
 
 export const usePostData = (path) => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(0);
   const [snack, setSnack] = useState();
-  
+  const [notLoggedIn, setNotLoggedIn] = useState(false)
+
   const token = localStorage.getItem("token");
 
-  const postData = (body) => {
+  const postData = (body, pathEnd) => {
         setSuccess(0)
         setLoading(true)
         setSnack()
+        if(!token)
+        {
+           setNotLoggedIn(<NotLoggedIn setOpen={setNotLoggedIn} open={true}/>)
+        }else{
       axios
-        .put(`${BASE_URL}${path}`, body, {
+        .put(`${BASE_URL}${path}${pathEnd || ""}`, body, {
           headers: {
             authorization: token,
           },
@@ -32,10 +38,9 @@ export const usePostData = (path) => {
           setLoading(false)
           setSnack(<Snackbar text={"Check the data and try again"}/>)
         });
+      }
   };
-
-
-  return [postData, snack, loading, success];
+  return [postData, snack, loading, success, notLoggedIn];
 };
 export const useLogin = () =>{
   const [loading, setLoading] = useState(false);

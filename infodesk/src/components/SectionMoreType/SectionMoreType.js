@@ -8,7 +8,7 @@ import Work from '../../assets/icons/Work.png'
 import Bureaucracy from '../../assets/icons/Bureaucracy-Azul.png'
 import Finance from '../../assets/icons/Finance.png'
 import Culture from '../../assets/icons/Culture.png'
-const Section = ({topic, setTopic}) => {
+const Section = ({topic, setTopic, color}) => {
 const sections =  [
     {
         title: "Webinar",
@@ -43,7 +43,7 @@ const sections =  [
           sections.map((cardInfor) =>{
               return  <Card img={cardInfor.img} title={cardInfor.title}
               onClick={() => setTopic(cardInfor.title === topic? '': cardInfor.title)}
-              selected={cardInfor.title === topic}/>
+              selected={cardInfor.title === topic} color={color}/>
           })
       }
      

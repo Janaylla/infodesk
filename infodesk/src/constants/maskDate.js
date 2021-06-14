@@ -1,4 +1,7 @@
 export default function maskDate(dt) {
+  if(!dt){
+    return "";
+  }
   const date = new Date(dt);
   const nameMonth = [
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'

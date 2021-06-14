@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import {colorBlueDark} from '../../GlobalStyle'
 export const Main = styled.section`
   width: 100%;
   display: flex;

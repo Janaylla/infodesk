@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { text1, marginValue2, marginValue, colorGrey } from '../../GlobalStyle'
+import { text1, marginValue2, marginValue, colorGrey, colorOrange } from '../../GlobalStyle'
 export const DivContainer = styled.section`
 display: flex;
 flex-direction: column;
@@ -22,9 +22,9 @@ align-items: center;
   text-align: center;
   cursor:pointer;
   :hover{
-    img{
-      transform: scale(1.15);
-      transition:0.2s;
+    >div{
+      transform: scale(1.05);
+      transition:0.4s;
     }
   }
   h4{
@@ -33,9 +33,21 @@ align-items: center;
     font-weight: 500;
     color: ${colorGrey};
   }
-  img{
-    width: 150px;
-    height: 150px;
-    ${({selected}) => selected && 'transform: scale(1.15);'}
+  >div{
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      
+      ${({selected}) => selected && `background-color: ${colorOrange};\n;border: 4px solid ${colorOrange};`}
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 5px;
+    img{
+      width: 155px;
+      height: 155px;
+      
+    }
   }
 `

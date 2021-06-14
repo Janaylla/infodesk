@@ -7,12 +7,13 @@ import Comment from '../PostComment/PostComment'
 import CardComment2 from './CardCommentLevel2'
 import { KeyboardArrowDown, KeyboardArrowUp, MoreHoriz } from '@material-ui/icons'
 import { useDelDate } from '../../hooks/useDelDate'
+import maskDate from '../../constants/maskDate'
 
 const CardComment = ({ text, name, likes, myLike, id, update, type, 
-    myComment }) => {
-    const [like, setLike] = useState(myLike)
-    const [postLike, snackLike, loadingLike, successLike] = usePostData(`/${type}/comment1/${id}/like?like=${like}`)
-    const [postComments, snackComment, loadingComment, successComment] = usePostData(`/${type}/comment2/${id}`)
+    myComment, date }) => {
+
+    const [postLike, snackLike, loadingLike, successLike, notLoggedInLike] = usePostData(`/${type}/comment1/${id}/like?like=`)
+    const [postComments, snackComment, loadingComment, successComment, notLoggedInComment] = usePostData(`/${type}/comment2/${id}`)
     const [comments, getComments2] = useRequestData(`/${type}/comment2/${id}`, [], 'comments2')
 
     const [commenting, setCommenting] = useState(false)
@@ -20,9 +21,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, type,
     const [showComments, setShowComments] = useState(false)
     const [showButtonDelete, setShowButtonDelete] = useState(false)
     const [dataDel, loadingDel, successDel] = useDelDate(`/${type}/comment1`)
-    const onClickLike = (lk) => {
-        setLike(lk)
-    }
+  
     const onClickCancel = () => {
         setTextComment("")
         setCommenting(false)
@@ -30,10 +29,10 @@ const CardComment = ({ text, name, likes, myLike, id, update, type,
     const onClickComment = () => {
         postComments({ text: textComment })
     }
-    useEffect(() => {
-        postLike()
-    }, [like])
-
+    
+    const onClickLike = (like) => {
+        postLike({},like)
+    }
     useEffect(() => {
         if (!loadingComment && successComment === 1) {
             getComments2();
@@ -56,11 +55,13 @@ const CardComment = ({ text, name, likes, myLike, id, update, type,
     }, [id])
     return (
         <DivCardComment>
+            {notLoggedInLike || notLoggedInComment}
             <div className="avatar">
             </div>
             <div className="text">
             <Title>
-                    <h3>{name}</h3>
+                    <h3>{name} </h3>
+                    <h3>{maskDate(date)}</h3>
                     <div className="delete">
                         {myComment === 1 &&
                             <>
@@ -112,6 +113,7 @@ const CardComment = ({ text, name, likes, myLike, id, update, type,
                         update={getComments2}
                         type={type}
                         myComment={comments2.MyComment}
+                        date={comments2.Date}
                     />
                 })
                 }

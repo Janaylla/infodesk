@@ -4,20 +4,16 @@ import { ThumbDownOutlined, ThumbUpAltOutlined, ThumbDown, ThumbUp, MoreHoriz } 
 import { usePostData } from '../../hooks/usePostData'
 
 import { useDelDate } from '../../hooks/useDelDate'
+import maskDate from '../../constants/maskDate'
 
-const CardComment = ({ text, name, likes, myLike, id, update, type, myComment }) => {
-    const [like, setLike] = useState(myLike)
-    const [postLike, snackLike, loadingLike, successLike] = usePostData(`/${type}/comment3/${id}/like?like=${like}`)
+const CardComment = ({ text, name, likes, myLike, id, update, type, myComment, date }) => {
+     const [postLike, snackLike, loadingLike, successLike, notLoggedInLike] = usePostData(`/${type}/comment3/${id}/like?like=`)
     const [showButtonDelete, setShowButtonDelete] = useState(false)
      const [dataDel, loadingDel, successDel] = useDelDate(`/${type}/comment3`)
-    const onClickLike = (lk) => {
-        setLike(lk)
+  
+     const onClickLike = (like) => {
+        postLike({},like)
     }
-
-    useEffect(() => {
-        postLike()
-    }, [like])
-
     useEffect(() => {
         if (!loadingLike && successLike)
             update()
@@ -32,11 +28,14 @@ const CardComment = ({ text, name, likes, myLike, id, update, type, myComment })
 
     return (
         <DivCardComment>
+            {notLoggedInLike}
             <div className="avatar">
             </div>
             <div className="text">
                 <Title>
-                    <h3>{name}</h3>
+                    
+                <h3>{name} </h3>
+                    <h3>{maskDate(date)}</h3>
                     <div className="delete">
                         {myComment === 1 &&
                             <>

@@ -18,7 +18,7 @@ const classController = {
             'Daily_basis_en_the_NL',
             'Transportation']
 
-            const {date, noData, order} = req.query;
+            const {date, noData, order, word} = req.query;
             let where = "";
             topics.forEach((item)=>{
                 if(req.query[item]){
@@ -29,14 +29,19 @@ const classController = {
             where = where.replace(/##/gi, " or ");
             where = where.replace('#', "(");
             where = where.replace('#', ")");
+            
              where += where ?
              (date && !noData ? `and  (DATE_FORMAT(s.Date,'%Y-%m-%d') 
              LIKE '${date}')`: ''):
              (date && !noData? ` (DATE_FORMAT(s.Date,'%Y-%m-%d') 
              LIKE '${date}')`: '')
 
-            let orderBy = (order ===  'liked') ? 'Likes DESC':(
-            (order ===  'disLiked') ? 'Likes ASC':'');
+             where += where ?
+             (word ? `and  (s.Text LIKE '%${word}%' or s.Title LIKE '%${word}%' or r.UserName LIKE '%${word}%')`: ''):
+             (word ? ` (s.Text LIKE '%${word}%' or s.Title LIKE '%${word}%' or r.UserName LIKE '%${word}%')`: '')
+             
+            let orderBy = (order ===  'liked') ? 'Likes DESC, s.Date DESC':(
+            (order ===  'disLiked') ? 'Likes ASC, s.Date DESC':'');
             console.log(req.query)
             const dbResult = Number(UserId) ? await StoryModel.get(where, orderBy, UserId):
             await StoryModel.get(where, orderBy)
@@ -99,6 +104,7 @@ const classController = {
     },
     like: async (req: Request, res: Response):Promise<any> => {
         try{
+            console.log("Aqio")
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
             

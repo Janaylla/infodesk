@@ -11,8 +11,13 @@ export const DivFooter = styled.footer`
         align-items: center;
     }
     background-color: ${colorBlue2};
+    *{
+        
+        position: relative;
+    }
 `
 export const DivInfo = styled.div`
+cursor: pointer;
 img{
     height: 200px;
     margin: 0 ${marginValue};
@@ -66,7 +71,25 @@ export const DivCredits = styled.div`
     li{
         ${text1}
         margin: 20px ${marginValue};
-        
     }
     
+`
+
+
+export const SubMenu = styled.ul`
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    position: absolute;
+    left: 100%;
+    width:auto;
+        z-index: 1;
+    li{
+        height: 30px;
+        border-bottom: 0.5px solid #aaaaaa;
+        margin: 0 !important;
+        padding: 13px 10px !important;
+        width: 130px;
+        
+    }
 `

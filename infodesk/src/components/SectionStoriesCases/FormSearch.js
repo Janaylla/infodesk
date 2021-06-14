@@ -2,12 +2,13 @@ import React, { useEffect } from "react";
 import { DivSearch } from '../../GlobalStyle'
 import Button from '../Button/Button'
 import { useForm } from '../../hooks/useForm'
-const Search = ({ setQuery, query, update, topics}) => {
+const Search = ({ setQuery, query, update, topics }) => {
 
 
     const formInitial = {
         date: '',
-        order: ''
+        order: '',
+        word: ''
     }
     topics.forEach(element => {
         formInitial[element] = true;
@@ -25,11 +26,12 @@ const Search = ({ setQuery, query, update, topics}) => {
         let newQuery = "";
 
         topics.forEach(i => {
-            newQuery += form[i]? `#${i}=on#`:``;
+            newQuery += form[i] ? `#${i}=on#` : ``;
         });
-        newQuery += form.noData ?"#noData=on#":''
-        newQuery += form.date ?`#date=${form.date}#`:''
-        newQuery += form.order ?`#order=${form.order}#`:''
+        newQuery += form.noData ? "#noData=on#" : ''
+        newQuery += form.date ? `#date=${form.date}#` : ''
+        newQuery += form.order ? `#order=${form.order}#` : ''
+        newQuery += form.word ? `#word=${form.word}#` : ''
         newQuery = newQuery.replace(/##/gi, "&");
         newQuery = newQuery.replace(/#/gi, "");
 
@@ -38,6 +40,10 @@ const Search = ({ setQuery, query, update, topics}) => {
     return (
         <DivSearch>
             <form onSubmit={submit}>
+                    <h4>Word key</h4>
+                    <input type="text" name={'word'} onChange={onChange}
+                        checked={form['word']} />
+
                 <h4>Topic</h4>
                 <div className="checkbox">
                     {
@@ -61,21 +67,21 @@ const Search = ({ setQuery, query, update, topics}) => {
                         checked={form['noData']} />
                     Do not filter by date
                 </label>
-                <input type="date" name={'date'} onChange={onChange} 
-                value={form.noData?'':form['date']} disabled={form.noData} />
+                <input type="date" name={'date'} onChange={onChange}
+                    value={form.noData ? '' : form['date']} disabled={form.noData} />
 
                 <div className="checkbox">
                     <h4>Order</h4>
                     <label>
                         <input type="radio" name={'order'} onChange={onChange}
-                            checked={form['order'] === 'liked'} value="liked" 
-                            onClick={() => resetForm({...form, order: ''})}/>
+                            checked={form['order'] === 'liked'} value="liked"
+                            onClick={() => resetForm({ ...form, order: '' })} />
                     Most Liked
                 </label>
                     <label>
                         <input type="radio" name={'order'} onChange={onChange}
-                            checked={form['order'] === 'disLiked'} value="disLiked" 
-                           onClick={() => resetForm({...form, order: ''})} />
+                            checked={form['order'] === 'disLiked'} value="disLiked"
+                            onClick={() => resetForm({ ...form, order: '' })} />
                     Most DisLiked
                 </label>
                 </div>

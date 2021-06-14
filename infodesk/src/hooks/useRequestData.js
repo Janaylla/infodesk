@@ -14,9 +14,10 @@ export const useRequestData = (path, initialState, keyObject) => {
       })
       .then((response) => {
         if (keyObject)
-          response.data[keyObject] ? setData(response.data[keyObject]) : setData(initialState);
+          if(response.data[keyObject]) 
+            response.data[keyObject] ? setData(response.data[keyObject]): setData(initialState);
         else {
-          setData(response.data);
+          response.data ? setData(response.data): setData();
         }
       })
       .catch((err) => {

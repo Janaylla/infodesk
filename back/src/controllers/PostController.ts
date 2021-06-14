@@ -7,7 +7,7 @@ import post from '../types/post'
 const postController = {
     get: async (req: Request, res: Response):Promise<any> => {
         try{
-            const {room, studio, apartment, date, noData} = req.query;
+            const {room, studio, apartment, date, noData, word} = req.query;
             const token = req.headers.authorization as string;
             const userId = await userModel.getIdToken(token)
             let where = "";
@@ -22,6 +22,11 @@ const postController = {
              where += where ?
              (date && !noData ? `and p.Date='${date}'`: ''):
              (date && !noData? `p.Date = '${date}'`: '')
+
+             where += where ?
+             (word ? `and  (p.Text LIKE '%${word}%' or r.UserName LIKE '%${word}%')`: ''):
+             (word ? ` (p.Text LIKE '%${word}%' or r.UserName LIKE '%${word}%')`: '')
+            console.log(word, where)
              
             const dbResult:[] = userId ? await postModel.get(where):
             await postModel.get(where, userId)
