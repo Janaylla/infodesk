@@ -8,14 +8,12 @@ import { LikedSaved, ArrowDown } from '../../GlobalStyle'
 import { ThumbDownOutlined, ThumbUpAltOutlined, ThumbDown, ThumbUp } from '@material-ui/icons'
 import { KeyboardArrowDown, KeyboardArrowUp, MoreHoriz } from '@material-ui/icons'
 import { useDelDate } from '../../hooks/useDelDate'
-
-const FindHome = ({ id, title, userName, date, text, topic, disLikes, likes, myLike, save, update, myComment }) => {
-
-    const [query, setQuery] = useState("");
+import maskDate from '../../constants/maskDate'
+const FindHome = ({ id, title, userName, date, text, topic, likes, myLike, update, myComment }) => {
     const [comments, getComments] = useRequestData(`/story/comment1/${id}`, [], 'comments1')
-    const [storyComments, snackComment, loadingComment, successComment] = usePostData(`/story/comment1/${id}`)
-    const [like, setLike] = useState(myLike)
-    const [postLike, snackLike, loadingLike, successLike] = usePostData(`/story/${id}/like?like=${like}`)
+    const [storyComments, snackComment, loadingComment, successComment, notLoggedInComment] = usePostData(`/story/comment1/${id}`)
+
+    const [postLike, snackLike, loadingLike, successLike, notLoggedInLike] = usePostData(`/story/${id}/like?like=`)
     const [textComment, setTextComment] = useState("")
     const [showButtonDelete, setShowButtonDelete] = useState(false)
     const [dataDel, loadingDel, successDel] = useDelDate(`/story`)
@@ -37,9 +35,7 @@ const FindHome = ({ id, title, userName, date, text, topic, disLikes, likes, myL
     useEffect(() => {
         getComments()
     }, [id])
-    useEffect(() => {
-        postLike();
-    }, [like])
+
     useEffect(() => {
         if (!loadingLike && successLike) {
             update()
@@ -54,6 +50,7 @@ const FindHome = ({ id, title, userName, date, text, topic, disLikes, likes, myL
     return (
         <>
             <DivCardHome>
+                {notLoggedInComment || notLoggedInLike}
                 <div className="mainAvatar">
                     <div className="avatar">
 
@@ -63,7 +60,7 @@ const FindHome = ({ id, title, userName, date, text, topic, disLikes, likes, myL
                 <div className="contentPost">
                     <div className="userName">
                         <p>{userName}</p>
-                        <p>{date}</p>
+                        <p>{maskDate(date)}</p>
                     </div>
                     <div className="contentText">
                         <div className="text">
@@ -90,10 +87,10 @@ const FindHome = ({ id, title, userName, date, text, topic, disLikes, likes, myL
                     </div>
                     <LikedSaved>
                         <div className="likes">
-                            {myLike === 1 ? <ThumbUp onClick={() => setLike(0)} /> :
-                                <ThumbUpAltOutlined onClick={() => setLike(1)} />}
-                            {myLike === 0 ? <ThumbDown onClick={() => setLike(0)} /> :
-                                <ThumbDownOutlined onClick={() => setLike(-1)} />}
+                            {myLike === 1 ? <ThumbUp onClick={() => postLike({},0)} /> :
+                                <ThumbUpAltOutlined onClick={() => postLike({},1)} />}
+                            {myLike === 0 ? <ThumbDown onClick={() => postLike({},0)} /> :
+                                <ThumbDownOutlined onClick={() => postLike({},-1)} />}
                             <p>{likes}</p>
                         </div>
                     </LikedSaved>
@@ -127,6 +124,7 @@ const FindHome = ({ id, title, userName, date, text, topic, disLikes, likes, myL
                         update={getComments}
                         type={"story"}
                         myComment={comments.MyComment}
+                        date={comments.Date}
                     />
                 })}
             </DivHomeComments>

@@ -91,6 +91,7 @@ export const DivSearch = styled.div`
     >input, >button{
         width: 150px;
         margin: 4px 0 8px 0;
+        padding: 3px 2px;
     }
     h4{
         margin: 8px 0 4px 0;

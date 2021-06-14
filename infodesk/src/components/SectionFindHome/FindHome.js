@@ -5,6 +5,7 @@ import Search from './FormSearch'
 import CardHome from './CardHome'
 import {useRequestData} from '../../hooks/useRequestData'
 import NewPost from '../../components/NewPost/NewPost'
+import NotLoggedIn from '../../components/NotLoggedIn/NotLoggedIn'
 const FindHome = () => {
     const [query, setQuery] = useState("");
     const [posts, getPosts] = useRequestData(`/post/all?${query}`, [], 'posts')
@@ -15,9 +16,19 @@ const FindHome = () => {
             <Search setQuery={setQuery} query={query}  update={getPosts}/>
             <DivFind>
            <h2>Do you have place to announce?</h2>
-           <Button color="orange" onClick={() => setOpenNewPost(true)}>Post It</Button>
+           <Button color="orange" onClick={() => {
+                    setOpenNewPost(true)
+                }
+                }
+                >Post It</Button>
 
-             <NewPost open={openNewPost} update={getPosts} setOpen={setOpenNewPost}/> 
+                {
+                    localStorage.getItem("token") ?
+                    <NewPost open={openNewPost} update={getPosts} setOpen={setOpenNewPost}/> 
+                        : <NotLoggedIn setOpen={setOpenNewPost} open={openNewPost} />
+                }
+
+           
             
             <Comments>
                 {

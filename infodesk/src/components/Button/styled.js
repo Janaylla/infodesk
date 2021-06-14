@@ -10,7 +10,6 @@ export const Button = styled.button`
     color =  colorBlueDark;
     else if(props.color === "white")
     color = "white";
-
     return color
   }};
   cursor: pointer;
@@ -19,6 +18,26 @@ export const Button = styled.button`
   -webkit-box-shadow: 0px 7px 14px -7px rgba(0,0,0,0.48); 
   box-shadow: 0px 7px 14px -7px rgba(0,0,0,0.48);
   font-weight: 800;
+  :hover{
+    color: ${(props) => {
+    let color = colorOrange;
+    if(props.color === "blue")
+    color =  colorBlueDark;
+    else if(props.color === "white")
+    color = "white";
+    return color
+  }};
+  border:1px solid ${(props) => {
+    let color = colorOrange;
+    if(props.color === "blue")
+    color =  colorBlueDark;
+    else if(props.color === "white")
+    color = "white";
+    return color 
+  }};
+  background-color: white;
+  transition: 500ms;
+  }
   svg{
     color: "white";
   }

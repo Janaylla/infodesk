@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { Nav } from '../../GlobalStyle'
 import { colorBlueDark, marginValue, text2, text3, marginValue2, colorGrey } from '../../GlobalStyle'
 export const DivSection = styled.section`
     background-color: ${colorBlueDark};

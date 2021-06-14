@@ -6,7 +6,7 @@ import { useRequestData } from '../../../hooks/useRequestData'
 import { usePostData } from '../../../hooks/usePostData'
 import { KeyboardArrowDown, KeyboardArrowUp, MoreHoriz } from '@material-ui/icons'
 import { LikedSaved, ArrowDown } from '../../../GlobalStyle'
-
+import maskDate from '../../../constants/maskDate'
 const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id, date, address }) => {
     const [comments, getComments] = useRequestData(`/post/comment1/${id}`, [], 'comments1')
     const [postComments, snack, loading, success] = usePostData(`/post/comment1/${id}`)
@@ -42,7 +42,7 @@ const FindHome = ({ text, userName, price, name, contact, typeAccommodation, id,
                 <div className="contentPost">
                     <div className="userName">
                         <p>{userName}</p>
-                        <p>{date}</p>
+                        <p>{maskDate(date)}</p>
                     </div>
                     <div className="contentText">
                         <div className="text">

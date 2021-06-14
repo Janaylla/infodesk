@@ -5,6 +5,7 @@ import Search from './FormSearch'
 import CardStory from './CardStory'
 import { useRequestData } from '../../hooks/useRequestData'
 import NewStory from '../NewStory/NewStory'
+import NotLoggedIn from '../../components/NotLoggedIn/NotLoggedIn'
 const FindHome = () => {
     const [query, setQuery] = useState("");
     const [stories, getStories] = useRequestData(`/story/all?${query}`, [], 'stories')
@@ -24,10 +25,17 @@ const FindHome = () => {
             <Search update={getStories} setQuery={setQuery} query={query} topics={topics} />
             <DivFind>
                 <h2>Do you have place to announce?</h2>
-                <Button color="orange" onClick={() => setOpenNewPost(true)}>Story It</Button>
+                <Button color="orange" onClick={() => {
+                    setOpenNewPost(true);
+                }
+                }
+                >Story It</Button>
 
-                <NewStory topics={topics} open={openNewPost} update={getStories} setOpen={setOpenNewPost} />
-
+                {
+                    localStorage.getItem("token") ?
+                        <NewStory topics={topics} open={openNewPost} update={getStories} setOpen={setOpenNewPost} />
+                        : <NotLoggedIn setOpen={setOpenNewPost} open={openNewPost} />
+                }
                 <Comments>
                     {
                         stories && stories.map((story) => {

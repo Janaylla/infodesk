@@ -1,12 +1,16 @@
-import React from "react";
-import {DivCard} from './styled'
-import {ArrowForward} from '@material-ui/icons'
-const Card = ({img, title, text}) => {
-  return <DivCard>
-      <img src={img}/>
+import React,{useState} from "react";
+import { DivCard, DivColor } from './styled'
+import { ArrowRightAlt } from '@material-ui/icons'
+const Card = ({ img, title, text, color }) => {
+  
+
+  return <DivCard > 
+    <DivColor className="color" color={color}/>
+      <img src={img} />
       <h4>{title}</h4>
       <p>{text}</p>
-      <button>Read more <ArrowForward/> </button>
+      <button>Read more <ArrowRightAlt /> </button>
+
   </DivCard>
 };
 

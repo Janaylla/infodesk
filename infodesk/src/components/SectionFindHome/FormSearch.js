@@ -9,7 +9,8 @@ const Search = ({setQuery, query, update}) => {
         studio: true,
         apartment: true,
         date: '',
-        noData: true
+        noData: true,
+        word: ''
     }
     useEffect(() =>{
         console.log(query)
@@ -25,6 +26,8 @@ const Search = ({setQuery, query, update}) => {
         newQuery += form.studio ?"#studio=on#":''
         newQuery += form.apartment ?"#apartment=on#":''
         newQuery += form.noData ?"#noData=on#":''
+        
+        newQuery += form.word ?`#word=${form.word}#`:''
 
         newQuery += form.date ?`#date=${form.date}#`:''
         newQuery= newQuery.replace(/##/gi, "&");
@@ -35,6 +38,9 @@ const Search = ({setQuery, query, update}) => {
     return (
         <DivSearch>
             <form onSubmit={submit}> 
+            <h4>Word key</h4> 
+                    <input type="text" name={'word'} onChange={onChange}
+                      checked={form['word']}/>
                 <h4>Topic</h4>
                 <div className="checkbox">
                 <label>
